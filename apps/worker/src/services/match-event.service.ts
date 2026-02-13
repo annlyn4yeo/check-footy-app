@@ -1,5 +1,6 @@
 import { prisma } from "@checkfooty/db";
 import { logger } from "../logger.js";
+import type { Prisma } from "@checkfooty/db";
 
 type UpsertMatchEventInput = {
   providerEventId: number;
@@ -20,7 +21,7 @@ type UpsertMatchEventInput = {
 };
 
 export async function upsertMatchEvent(input: UpsertMatchEventInput) {
-  return prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     logger.info(
       { providerEventId: input.providerEventId },
       "Starting match event upsert",

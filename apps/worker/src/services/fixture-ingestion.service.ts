@@ -1,5 +1,7 @@
 import { prisma } from "@checkfooty/db";
 import { logger } from "../logger.js";
+import { getRedis } from "../redis.js";
+import type { Prisma } from "@checkfooty/db";
 
 type IngestEventInput = {
   providerEventId: number;
@@ -49,7 +51,7 @@ function isValidStatusTransition(current: string, incoming: string): boolean {
 }
 
 export async function ingestFixturePayload(payload: IngestFixturePayload) {
-  return prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     logger.info(
       { providerFixtureId: payload.providerFixtureId },
       "Starting atomic fixture ingestion",
@@ -76,7 +78,6 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
         },
         "Skipping stale ingestion payload",
       );
-
       return;
     }
 
@@ -90,7 +91,6 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
         },
         "Minute regression detected during LIVE state",
       );
-
       throw new Error("Illegal minute regression");
     }
 
@@ -104,7 +104,6 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
         },
         "Invalid fixture status transition detected",
       );
-
       throw new Error("Illegal fixture state transition");
     }
 
@@ -121,7 +120,7 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
       },
     });
 
-    // Deterministic ordering
+    // Deterministic event ordering
     const sortedEvents = [...payload.events].sort((a, b) => {
       if (a.minute !== b.minute) {
         return a.minute - b.minute;
@@ -171,4 +170,12 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
       "Atomic ingestion complete",
     );
   });
+
+  // Redis invalidation AFTER successful transaction
+  const redis = getRedis();
+  const cacheKey = `fixture:${payload.providerFixtureId}`;
+
+  await redis.del(cacheKey);
+
+  logger.info({ cacheKey }, "Redis cache invalidated after ingestion");
 }

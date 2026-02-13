@@ -5,25 +5,31 @@ import { redis } from "@/lib/redis";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
-  const cacheKey = `fixture:${params.id}`;
+  const { id } = await context.params;
 
-  // 1. Check cache
+  const providerFixtureId = Number(id);
+
+  if (Number.isNaN(providerFixtureId)) {
+    return new Response("Invalid fixture id", { status: 400 });
+  }
+
+  const cacheKey = `fixture:${providerFixtureId}`;
+
   const cached = await redis.get(cacheKey);
 
   if (cached) {
     return Response.json(JSON.parse(cached));
   }
 
-  // 2. Fallback to DB
-  const fixture = await FixtureRepository.findById(params.id);
+  const fixture =
+    await FixtureRepository.findByProviderFixtureId(providerFixtureId);
 
   if (!fixture) {
     return new Response("Not Found", { status: 404 });
   }
 
-  // 3. Store in cache (TTL 30 seconds)
   await redis.set(cacheKey, JSON.stringify(fixture), "EX", 30);
 
   return Response.json(fixture);

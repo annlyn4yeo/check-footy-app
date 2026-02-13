@@ -1,5 +1,6 @@
 import { prisma } from "@checkfooty/db";
 import { logger } from "../logger.js";
+import type { Prisma } from "@checkfooty/db";
 
 type UpdateFixtureInput = {
   providerFixtureId: number;
@@ -10,7 +11,7 @@ type UpdateFixtureInput = {
 };
 
 export async function updateFixture(input: UpdateFixtureInput) {
-  return prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     logger.info(
       { providerFixtureId: input.providerFixtureId },
       "Starting fixture update transaction",

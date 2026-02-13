@@ -1,9 +1,9 @@
 import { prisma } from "../client";
 
 export const FixtureRepository = {
-  findById(id: string) {
+  findByProviderFixtureId(providerFixtureId: number) {
     return prisma.fixture.findUnique({
-      where: { id },
+      where: { providerFixtureId },
       include: {
         league: true,
         homeTeam: true,
