@@ -5,13 +5,12 @@
   "exports": {
     ".": "./src/index.ts"
   },
-  "prisma": {
-    "schema": "prisma/schema.prisma"
-  },
   "dependencies": {
-    "@prisma/client": "^6.19.2"
+    "@prisma/client": "^6.19.2",
+    "dotenv": "^17.2.4"
   },
   "devDependencies": {
+    "@types/node": "^20.19.33",
     "prisma": "^6.19.2"
   }
 }
