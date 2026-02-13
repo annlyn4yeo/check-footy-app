@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum FixtureStatus {
+  SCHEDULED
+  LIVE
+  HALF_TIME
+  FULL_TIME
+  POSTPONED
+  CANCELLED
+}
+
+enum EventType {
+  GOAL
+  PENALTY_GOAL
+  OWN_GOAL
+  YELLOW_CARD
+  RED_CARD
+  SUBSTITUTION
+  VAR
+}
+
+model League {
+  id          String   @id @default(uuid())
+  providerId  Int      @unique
+  name        String
+  country     String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  fixtures    Fixture[]
+}
+
+model Team {
+  id          String   @id @default(uuid())
+  providerId  Int      @unique
+  name        String
+  logoUrl     String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  homeFixtures Fixture[] @relation("HomeTeam")
+  awayFixtures Fixture[] @relation("AwayTeam")
+  events       MatchEvent[]
+}
+
+model Fixture {
+  id                String         @id @default(uuid())
+  providerFixtureId Int            @unique
+
+  leagueId String
+  league   League   @relation(fields: [leagueId], references: [id])
+
+  homeTeamId String
+  homeTeam   Team    @relation("HomeTeam", fields: [homeTeamId], references: [id])
+
+  awayTeamId String
+  awayTeam   Team    @relation("AwayTeam", fields: [awayTeamId], references: [id])
+
+  kickoffUtc DateTime
+  status     FixtureStatus @default(SCHEDULED)
+
+  minute     Int      @default(0)
+  scoreHome  Int      @default(0)
+  scoreAway  Int      @default(0)
+  isLive     Boolean  @default(false)
+
+  providerLastUpdatedAt DateTime?
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  deletedAt  DateTime?
+
+  events     MatchEvent[]
+
+  @@index([leagueId])
+  @@index([kickoffUtc])
+  @@index([isLive])
+  @@index([leagueId, isLive])
+  @@index([isLive, kickoffUtc])
+}
+
+model MatchEvent {
+  id                String   @id @default(uuid())
+  providerEventId   Int?     @unique
+
+  fixtureId String
+  fixture   Fixture @relation(fields: [fixtureId], references: [id])
+
+  minute       Int
+  extraMinute  Int?
+
+  type         EventType
+
+  teamId String?
+  team   Team? @relation(fields: [teamId], references: [id])
+
+  playerName   String?
+  assistName   String?
+
+  providerUpdatedAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([fixtureId])
+  @@index([fixtureId, minute])
+}
