@@ -1,2 +1,2 @@
-export * from "./client";
-export * from "./repositories/fixture.repository";
+export { prisma } from "./client.js";
+export * from "./repositories/fixture.repository.js";
