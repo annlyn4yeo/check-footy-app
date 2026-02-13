@@ -12,19 +12,12 @@ async function bootstrap() {
 
     await ingestFixturePayload({
       providerFixtureId: 1001,
-      minute: 25,
-      scoreHome: 3,
+      minute: 90,
+      scoreHome: 2,
       scoreAway: 0,
-      isLive: true,
-      providerTimestamp: new Date("2026-01-01T10:00:00Z"),
-      events: [
-        {
-          providerEventId: 7001,
-          minute: 24,
-          type: "GOAL",
-          playerName: "Player C",
-        },
-      ],
+      status: "FULL_TIME",
+      providerTimestamp: new Date("2026-03-01T11:30:00Z"),
+      events: [],
     });
 
     startHeartbeat();
