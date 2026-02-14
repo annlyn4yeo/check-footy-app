@@ -1,15 +1,38 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { useFixtureSubscription } from "@/app/hooks/useFixtureSubscription";
+import {
+  useFixtureSubscription,
+  FixtureUpdate,
+} from "@/app/hooks/useFixtureSubscription";
 import "./fixture.css";
 
 export default function FixturePage() {
   const params = useParams();
   const fixtureId = Number(params.providerFixtureId);
 
-  const { data, connected } = useFixtureSubscription(fixtureId);
+  const { data: liveData, connected } = useFixtureSubscription(fixtureId);
+
+  const [snapshot, setSnapshot] = useState<FixtureUpdate | null>(null);
+
+  useEffect(() => {
+    async function load() {
+      const res = await fetch(`/api/fixtures/${fixtureId}`, {
+        cache: "no-store",
+      });
+
+      if (!res.ok) return;
+
+      const json = await res.json();
+      setSnapshot(json);
+    }
+
+    load();
+  }, [fixtureId]);
+
+  const data = liveData ?? snapshot;
 
   const scoreKey = `${data?.scoreHome}-${data?.scoreAway}`;
 
@@ -30,10 +53,10 @@ export default function FixturePage() {
           <AnimatePresence mode="popLayout">
             <motion.div
               key={scoreKey}
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 1.05, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.18 }}
               className="score"
             >
               {data?.scoreHome ?? 0} : {data?.scoreAway ?? 0}
@@ -51,7 +74,7 @@ export default function FixturePage() {
           {data?.minute ? `${data.minute}'` : ""}
         </motion.div>
 
-        {!connected && <div className="connection-state">Reconnecting…</div>}
+        {!connected && <div className="connection-state">Syncing…</div>}
       </div>
 
       <div className="timeline-placeholder">Event timeline coming soon</div>
