@@ -1,3 +1,3 @@
-export { prisma } from "./client";
-export type { Prisma } from "./client";
-export * from "./repositories/fixture.repository";
+export { prisma } from "./client.js";
+export type { Prisma } from "./client.js";
+export * from "./repositories/fixture.repository.js";

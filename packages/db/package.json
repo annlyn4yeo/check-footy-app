@@ -2,8 +2,16 @@
   "name": "@checkfooty/db",
   "private": true,
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
   },
   "dependencies": {
     "@prisma/client": "^6.19.2",
@@ -11,6 +19,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.33",
-    "prisma": "^6.19.2"
+    "prisma": "^6.19.2",
+    "typescript": "^5.x"
   }
 }

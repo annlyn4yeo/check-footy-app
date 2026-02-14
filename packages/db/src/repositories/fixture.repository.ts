@@ -1,6 +1,22 @@
-import { prisma } from "../client";
+import { prisma } from "../client.js";
+import type { Prisma } from "@prisma/client";
 
-export const FixtureRepository = {
+export interface IFixtureRepository {
+  findByProviderFixtureId(
+    providerFixtureId: number,
+  ): Promise<Prisma.FixtureGetPayload<{
+    include: {
+      league: true;
+      homeTeam: true;
+      awayTeam: true;
+      events: true;
+    };
+  }> | null>;
+
+  findLive(): Promise<Prisma.FixtureGetPayload<{}>[]>;
+}
+
+export const FixtureRepository: IFixtureRepository = {
   findByProviderFixtureId(providerFixtureId: number) {
     return prisma.fixture.findUnique({
       where: { providerFixtureId },

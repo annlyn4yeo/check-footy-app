@@ -3,10 +3,13 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "moduleResolution": "NodeNext",
     "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "ES2022",
     "strict": true
   },
+  "references": [
+    { "path": "../../packages/db" }
+  ],
   "include": ["src"]
 }
