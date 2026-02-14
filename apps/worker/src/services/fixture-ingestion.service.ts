@@ -3,6 +3,7 @@ import { logger } from "../logger.js";
 import { getRedis } from "../redis.js";
 import type { Prisma } from "@checkfooty/db";
 import { publishFixtureUpdated } from "../events/publisher.js";
+import type { FixtureStatus } from "../types/fixture-status.js";
 
 type IngestEventInput = {
   providerEventId: number;
@@ -25,13 +26,7 @@ type IngestFixturePayload = {
   minute: number;
   scoreHome: number;
   scoreAway: number;
-  status:
-    | "SCHEDULED"
-    | "LIVE"
-    | "HALF_TIME"
-    | "FULL_TIME"
-    | "POSTPONED"
-    | "CANCELLED";
+  status: FixtureStatus;
   providerTimestamp: Date;
   events: IngestEventInput[];
 };

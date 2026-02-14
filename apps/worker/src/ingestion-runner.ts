@@ -1,11 +1,12 @@
 import { logger } from "./logger.js";
 import { ingestFixturePayload } from "./services/fixture-ingestion.service.js";
 import { FixtureRepository } from "@checkfooty/db";
+import { createProvider } from "./providers/providers.factory.js";
 
 const INTERVAL_MS = 5000;
 
 let isRunning = false;
-
+const provider = createProvider();
 const providerFixtureId = 1001;
 
 export function startIngestionLoop() {
@@ -60,15 +61,14 @@ export function startIngestionLoop() {
         nextStatus = "FULL_TIME";
       }
 
-      await ingestFixturePayload({
-        providerFixtureId,
-        minute: nextMinute,
-        scoreHome: Math.floor(nextMinute / 10),
-        scoreAway: 0,
-        status: nextStatus,
-        providerTimestamp: new Date(),
-        events: [],
-      });
+      const update = await provider.getFixtureUpdate(providerFixtureId);
+
+      if (!update) {
+        scheduleNext();
+        return;
+      }
+
+      await ingestFixturePayload(update);
     } catch (error) {
       logger.error({ error }, "Ingestion cycle failed");
     } finally {
