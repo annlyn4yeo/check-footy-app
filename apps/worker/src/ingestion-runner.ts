@@ -3,7 +3,9 @@ import { ingestFixturePayload } from "./services/fixture-ingestion.service.js";
 import { FixtureRepository } from "@checkfooty/db";
 import { createProvider } from "./providers/providers.factory.js";
 
-const INTERVAL_MS = 5000;
+let currentInterval = 5000;
+const MIN_INTERVAL = 5000;
+const MAX_INTERVAL = 60000;
 
 let isRunning = false;
 const provider = createProvider();
@@ -17,72 +19,42 @@ export function startIngestionLoop() {
     }
 
     isRunning = true;
-
     const start = Date.now();
-    logger.info("Ingestion cycle started");
 
     try {
-      const fixture =
-        await FixtureRepository.findByProviderFixtureId(providerFixtureId);
+      const liveFixtures = await FixtureRepository.findLive();
 
-      if (!fixture) {
-        logger.warn(
-          { providerFixtureId },
-          "Fixture not found. Skipping cycle.",
+      if (liveFixtures.length === 0) {
+        currentInterval = Math.min(currentInterval * 2, MAX_INTERVAL);
+        return;
+      }
+
+      for (const fixture of liveFixtures) {
+        const update = await provider.getFixtureUpdate(
+          fixture.providerFixtureId,
         );
-        return;
+
+        if (!update) continue;
+
+        await ingestFixturePayload(update);
       }
 
-      // ---- Terminal State Lock ----
-      const terminalStates = ["FULL_TIME", "POSTPONED", "CANCELLED"];
-
-      if (terminalStates.includes(fixture.status)) {
-        logger.info(
-          { status: fixture.status },
-          "[Terminal Lock] Fixture is terminal. No mutation.",
-        );
-        return;
-      }
-
-      // Only mutate LIVE fixtures
-      if (fixture.status !== "LIVE") {
-        logger.info(
-          { status: fixture.status },
-          "Fixture not LIVE. Skipping mutation.",
-        );
-        return;
-      }
-
-      const nextMinute = fixture.minute + 1;
-
-      let nextStatus: "LIVE" | "FULL_TIME" = "LIVE";
-
-      if (nextMinute >= 90) {
-        nextStatus = "FULL_TIME";
-      }
-
-      const update = await provider.getFixtureUpdate(providerFixtureId);
-
-      if (!update) {
-        scheduleNext();
-        return;
-      }
-
-      await ingestFixturePayload(update);
+      currentInterval = MIN_INTERVAL;
     } catch (error) {
       logger.error({ error }, "Ingestion cycle failed");
+      currentInterval = Math.min(currentInterval * 2, MAX_INTERVAL);
     } finally {
       const duration = Date.now() - start;
-
       logger.info({ durationMs: duration }, "Ingestion cycle completed");
-
       isRunning = false;
       scheduleNext();
     }
   }
 
   function scheduleNext() {
-    setTimeout(runCycle, INTERVAL_MS);
+    const jitter = Math.random() * 0.2 * currentInterval;
+    const delay = currentInterval + jitter;
+    setTimeout(runCycle, delay);
   }
 
   scheduleNext();

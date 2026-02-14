@@ -1,4 +1,5 @@
 import { SimulatedProvider } from "./simulated.provider.js";
+import { ApiFootballProvider } from "./api-football.provider.js";
 import type { FixtureProvider } from "./provider.interface.js";
 
 export function createProvider(): FixtureProvider {
@@ -7,6 +8,9 @@ export function createProvider(): FixtureProvider {
   switch (providerType) {
     case "simulated":
       return new SimulatedProvider();
+
+    case "api-football":
+      return new ApiFootballProvider();
 
     default:
       throw new Error(`Unsupported FIXTURE_PROVIDER: ${providerType}`);
