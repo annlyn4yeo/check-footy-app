@@ -1,0 +1,17 @@
+{
+  "name": "realtime",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "ioredis": "^5",
+    "ws": "^8"
+  },
+  "devDependencies": {
+    "tsx": "^4",
+    "typescript": "^5"
+  }
+}
