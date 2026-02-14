@@ -2,6 +2,7 @@ import { prisma } from "@checkfooty/db";
 import { logger } from "../logger.js";
 import { getRedis } from "../redis.js";
 import type { Prisma } from "@checkfooty/db";
+import { publishFixtureUpdated } from "../events/publisher.js";
 
 type IngestEventInput = {
   providerEventId: number;
@@ -178,4 +179,19 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
   await redis.del(cacheKey);
 
   logger.info({ cacheKey }, "Redis cache invalidated after ingestion");
+
+  await publishFixtureUpdated({
+    type: "fixture.updated",
+    providerFixtureId: payload.providerFixtureId,
+    status: payload.status,
+    minute: payload.minute,
+    scoreHome: payload.scoreHome,
+    scoreAway: payload.scoreAway,
+    updatedAt: new Date().toISOString(),
+  });
+
+  logger.info(
+    { providerFixtureId: payload.providerFixtureId },
+    "Published fixture.updated event",
+  );
 }

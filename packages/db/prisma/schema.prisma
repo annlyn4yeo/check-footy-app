@@ -7,6 +7,75 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model League {
+  id         String    @id @default(uuid())
+  providerId Int       @unique
+  name       String
+  country    String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  fixtures   Fixture[]
+}
+
+model Team {
+  id           String       @id @default(uuid())
+  providerId   Int          @unique
+  name         String
+  logoUrl      String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  awayFixtures Fixture[]    @relation("AwayTeam")
+  homeFixtures Fixture[]    @relation("HomeTeam")
+  events       MatchEvent[]
+}
+
+model Fixture {
+  id                    String        @id @default(uuid())
+  providerFixtureId     Int           @unique
+  leagueId              String
+  homeTeamId            String
+  awayTeamId            String
+  kickoffUtc            DateTime
+  minute                Int           @default(0)
+  scoreHome             Int           @default(0)
+  scoreAway             Int           @default(0)
+  isLive                Boolean       @default(false)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  deletedAt             DateTime?
+  providerLastUpdatedAt DateTime?
+  status                FixtureStatus @default(SCHEDULED)
+  awayTeam              Team          @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  homeTeam              Team          @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  league                League        @relation(fields: [leagueId], references: [id])
+  events                MatchEvent[]
+
+  @@index([leagueId])
+  @@index([kickoffUtc])
+  @@index([isLive])
+  @@index([leagueId, isLive])
+  @@index([isLive, kickoffUtc])
+}
+
+model MatchEvent {
+  id                String    @id @default(uuid())
+  providerEventId   Int?      @unique
+  fixtureId         String
+  minute            Int
+  extraMinute       Int?
+  type              EventType
+  teamId            String?
+  playerName        String?
+  assistName        String?
+  providerUpdatedAt DateTime?
+  createdAt         DateTime  @default(now())
+  fixture           Fixture   @relation(fields: [fixtureId], references: [id])
+  team              Team?     @relation(fields: [teamId], references: [id])
+
+  @@index([fixtureId])
+  @@index([fixtureId, minute])
+}
+
 enum FixtureStatus {
   SCHEDULED
   LIVE
@@ -24,92 +93,4 @@ enum EventType {
   RED_CARD
   SUBSTITUTION
   VAR
-}
-
-model League {
-  id          String   @id @default(uuid())
-  providerId  Int      @unique
-  name        String
-  country     String?
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  fixtures    Fixture[]
-}
-
-model Team {
-  id          String   @id @default(uuid())
-  providerId  Int      @unique
-  name        String
-  logoUrl     String?
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  homeFixtures Fixture[] @relation("HomeTeam")
-  awayFixtures Fixture[] @relation("AwayTeam")
-  events       MatchEvent[]
-}
-
-model Fixture {
-  id                String         @id @default(uuid())
-  providerFixtureId Int            @unique
-
-  leagueId String
-  league   League   @relation(fields: [leagueId], references: [id])
-
-  homeTeamId String
-  homeTeam   Team    @relation("HomeTeam", fields: [homeTeamId], references: [id])
-
-  awayTeamId String
-  awayTeam   Team    @relation("AwayTeam", fields: [awayTeamId], references: [id])
-
-  kickoffUtc DateTime
-  status     FixtureStatus @default(SCHEDULED)
-
-  minute     Int      @default(0)
-  scoreHome  Int      @default(0)
-  scoreAway  Int      @default(0)
-  isLive     Boolean  @default(false)
-
-  providerLastUpdatedAt DateTime?
-
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  deletedAt  DateTime?
-
-  events     MatchEvent[]
-
-  @@index([leagueId])
-  @@index([kickoffUtc])
-  @@index([isLive])
-  @@index([leagueId, isLive])
-  @@index([isLive, kickoffUtc])
-}
-
-model MatchEvent {
-  id                String   @id @default(uuid())
-  providerEventId   Int?     @unique
-
-  fixtureId String
-  fixture   Fixture @relation(fields: [fixtureId], references: [id])
-
-  minute       Int
-  extraMinute  Int?
-
-  type         EventType
-
-  teamId String?
-  team   Team? @relation(fields: [teamId], references: [id])
-
-  playerName   String?
-  assistName   String?
-
-  providerUpdatedAt DateTime?
-
-  createdAt DateTime @default(now())
-
-  @@index([fixtureId])
-  @@index([fixtureId, minute])
 }
