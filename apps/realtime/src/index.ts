@@ -5,9 +5,12 @@ import { WebSocket } from "ws";
 const subscriber = getSubscriber();
 
 subscriber.subscribe("fixture.updated");
+subscriber.subscribe("fixture.event");
 
 subscriber.on("message", (channel: string, message: string) => {
-  if (channel !== "fixture.updated") return;
+  if (channel !== "fixture.updated" && channel !== "fixture.event") {
+    return;
+  }
 
   // Backpressure guard (simple size check)
   if (message.length > 50_000) {

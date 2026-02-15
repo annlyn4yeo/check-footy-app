@@ -59,7 +59,7 @@ model Fixture {
 
 model MatchEvent {
   id                String    @id @default(uuid())
-  providerEventId   Int?      @unique
+  providerEventId   BigInt @unique
   fixtureId         String
   minute            Int
   extraMinute       Int?

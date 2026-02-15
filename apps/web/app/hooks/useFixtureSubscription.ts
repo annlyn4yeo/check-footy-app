@@ -12,6 +12,16 @@ export type FixtureUpdate = {
   updatedAt: string;
 };
 
+export type FixtureEvent = {
+  type: "fixture.event";
+  providerFixtureId: number;
+  eventId: string;
+  minute: number;
+  kind: "GOAL" | "OTHER";
+  team: "HOME" | "AWAY";
+  createdAt: string;
+};
+
 const WS_URL = "ws://localhost:4000";
 
 export function useFixtureSubscription(providerFixtureId: number) {
@@ -20,6 +30,8 @@ export function useFixtureSubscription(providerFixtureId: number) {
   const reconnectAttempts = useRef(0);
 
   const [data, setData] = useState<FixtureUpdate | null>(null);
+  const [events, setEvents] = useState<FixtureEvent[]>([]);
+
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
@@ -44,13 +56,20 @@ export function useFixtureSubscription(providerFixtureId: number) {
       };
 
       socket.onmessage = (event) => {
-        const parsed: FixtureUpdate = JSON.parse(event.data);
+        const parsed = JSON.parse(event.data);
 
         if (
           parsed.type === "fixture.updated" &&
           parsed.providerFixtureId === providerFixtureId
         ) {
           setData(parsed);
+        }
+
+        if (
+          parsed.type === "fixture.event" &&
+          parsed.providerFixtureId === providerFixtureId
+        ) {
+          setEvents((prev) => [parsed, ...prev]);
         }
       };
 
@@ -80,5 +99,5 @@ export function useFixtureSubscription(providerFixtureId: number) {
     };
   }, [providerFixtureId]);
 
-  return { data, connected };
+  return { data, events, connected };
 }

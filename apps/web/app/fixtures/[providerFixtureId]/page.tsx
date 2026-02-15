@@ -13,7 +13,11 @@ export default function FixturePage() {
   const params = useParams();
   const fixtureId = Number(params.providerFixtureId);
 
-  const { data: liveData, connected } = useFixtureSubscription(fixtureId);
+  const {
+    data: liveData,
+    events,
+    connected,
+  } = useFixtureSubscription(fixtureId);
 
   const [snapshot, setSnapshot] = useState<FixtureUpdate | null>(null);
 
@@ -77,7 +81,20 @@ export default function FixturePage() {
         {!connected && <div className="connection-state">Syncing…</div>}
       </div>
 
-      <div className="timeline-placeholder">Event timeline coming soon</div>
+      <div className="timeline">
+        {events.map((event) => (
+          <motion.div
+            key={event.eventId}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.18 }}
+            className={`event ${event.team.toLowerCase()}`}
+          >
+            <span className="event-minute">{event.minute}'</span>
+            <span className="event-label">{event.kind}</span>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }

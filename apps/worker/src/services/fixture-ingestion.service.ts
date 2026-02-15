@@ -31,6 +31,16 @@ type IngestFixturePayload = {
   events: IngestEventInput[];
 };
 
+type FixtureEventPayload = {
+  type: "fixture.event";
+  providerFixtureId: number;
+  eventId: string;
+  minute: number;
+  kind: "GOAL" | "OTHER";
+  team: "HOME" | "AWAY";
+  createdAt: string;
+};
+
 function isValidStatusTransition(current: string, incoming: string): boolean {
   if (current === incoming) return true;
 
@@ -47,6 +57,8 @@ function isValidStatusTransition(current: string, incoming: string): boolean {
 }
 
 export async function ingestFixturePayload(payload: IngestFixturePayload) {
+  const createdEvents: FixtureEventPayload[] = [];
+
   await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     logger.info(
       { providerFixtureId: payload.providerFixtureId },
@@ -158,6 +170,21 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
         },
       });
 
+      createdEvents.push({
+        type: "fixture.event",
+        providerFixtureId: payload.providerFixtureId,
+        eventId: crypto.randomUUID(),
+        minute: event.minute,
+        kind:
+          event.type === "GOAL" ||
+          event.type === "PENALTY_GOAL" ||
+          event.type === "OWN_GOAL"
+            ? "GOAL"
+            : "OTHER",
+        team: "HOME", // refine later if you add team inference
+        createdAt: new Date().toISOString(),
+      });
+
       logger.info({ providerEventId: event.providerEventId }, "Event created");
     }
 
@@ -184,6 +211,11 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
     scoreAway: payload.scoreAway,
     updatedAt: new Date().toISOString(),
   });
+
+  for (const eventPayload of createdEvents) {
+    await redis.publish("fixture.event", JSON.stringify(eventPayload));
+    console.log("Published fixture.event", eventPayload);
+  }
 
   logger.info(
     { providerFixtureId: payload.providerFixtureId },

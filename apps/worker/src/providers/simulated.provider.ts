@@ -20,7 +20,17 @@ export class SimulatedProvider implements FixtureProvider {
       scoreAway: 0,
       status: nextStatus,
       providerTimestamp: new Date(),
-      events: [],
+      events:
+        nextMinute % 15 === 0
+          ? [
+              {
+                providerEventId: Date.now(),
+                minute: nextMinute,
+                type: "GOAL",
+                playerName: "Sim Player",
+              },
+            ]
+          : [],
     };
   }
 }
