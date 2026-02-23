@@ -18,11 +18,24 @@ export type FixtureEvent = {
   eventId: string;
   minute: number;
   kind: "GOAL" | "OTHER";
-  team: "HOME" | "AWAY";
+  team: "HOME" | "AWAY" | null;
+  eventType?: string;
+  playerName?: string | null;
+  assistName?: string | null;
   createdAt: string;
 };
 
-const WS_URL = "ws://localhost:4000";
+function resolveWsUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_REALTIME_WS_URL;
+  if (configured) return configured;
+
+  if (typeof window === "undefined") {
+    return "ws://localhost:4000";
+  }
+
+  const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+  return `${protocol}://${window.location.hostname}:4000`;
+}
 
 export function useFixtureSubscription(
   providerFixtureId: number,
@@ -36,6 +49,7 @@ export function useFixtureSubscription(
   const [events, setEvents] = useState<FixtureEvent[]>(initialEvents);
 
   const [connected, setConnected] = useState(false);
+  const [hasConnectedOnce, setHasConnectedOnce] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,12 +57,13 @@ export function useFixtureSubscription(
     function connect() {
       if (cancelled) return;
 
-      const socket = new WebSocket(WS_URL);
+      const socket = new WebSocket(resolveWsUrl());
       socketRef.current = socket;
 
       socket.onopen = () => {
         reconnectAttempts.current = 0;
         setConnected(true);
+        setHasConnectedOnce(true);
 
         socket.send(
           JSON.stringify({
@@ -106,5 +121,5 @@ export function useFixtureSubscription(
     setEvents(initialEvents);
   }, [initialEvents]);
 
-  return { data, events, connected };
+  return { data, events, connected, hasConnectedOnce };
 }

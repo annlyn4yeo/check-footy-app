@@ -9,7 +9,8 @@ export interface ITeamRepository {
   upsertByProviderId(input: {
     providerId: number;
     name: string;
-    logoUrl?: string | null;
+    shortName?: string | null;
+    crestUrl?: string | null;
   }): Promise<TeamRecord>;
 }
 
@@ -36,12 +37,14 @@ export const TeamRepository: ITeamRepository = {
       where: { providerId: input.providerId },
       update: {
         name: input.name,
-        logoUrl: input.logoUrl ?? null,
+        shortName: input.shortName ?? null,
+        crestUrl: input.crestUrl ?? null,
       },
       create: {
         providerId: input.providerId,
         name: input.name,
-        logoUrl: input.logoUrl ?? null,
+        shortName: input.shortName ?? null,
+        crestUrl: input.crestUrl ?? null,
       },
     });
   },

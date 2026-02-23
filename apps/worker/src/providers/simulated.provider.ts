@@ -1,6 +1,7 @@
 import type { FixtureProvider } from "./provider.interface.js";
 import type { FixtureStatus } from "../types/fixture-status.js";
 import { FixtureRepository } from "@checkfooty/db";
+import type { ProviderFixtureEvent } from "./provider.interface.js";
 
 export class SimulatedProvider implements FixtureProvider {
   async getFixtureUpdate(providerFixtureId: number) {
@@ -13,6 +14,23 @@ export class SimulatedProvider implements FixtureProvider {
     const nextMinute = fixture.minute + 1;
     const nextStatus: FixtureStatus = nextMinute >= 90 ? "FULL_TIME" : "LIVE";
 
+    const events: ProviderFixtureEvent[] =
+      nextMinute % 15 === 0
+        ? [
+            {
+              providerEventId: Date.now(),
+              minute: nextMinute,
+              type: "GOAL",
+              providerTeamId:
+                nextMinute % 30 === 0
+                  ? fixture.awayTeam.providerId
+                  : fixture.homeTeam.providerId,
+              playerName: "Sim Player",
+              assistName: "Sim Assist",
+            },
+          ]
+        : [];
+
     return {
       providerFixtureId,
       minute: nextMinute,
@@ -20,17 +38,7 @@ export class SimulatedProvider implements FixtureProvider {
       scoreAway: 0,
       status: nextStatus,
       providerTimestamp: new Date(),
-      events:
-        nextMinute % 15 === 0
-          ? [
-              {
-                providerEventId: Date.now(),
-                minute: nextMinute,
-                type: "GOAL",
-                playerName: "Sim Player",
-              },
-            ]
-          : [],
+      events,
     };
   }
 }

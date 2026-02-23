@@ -1,7 +1,8 @@
 export type FixtureTeamView = {
   providerId: number;
   name: string;
-  logoUrl: string | null;
+  shortName: string | null;
+  crestUrl: string | null;
 };
 
 export type FixtureLeagueView = {
@@ -26,6 +27,7 @@ export type FixtureListItem = {
 export type FixtureTimelineEvent = {
   providerEventId: string;
   minute: number;
+  extraMinute: number | null;
   type: string;
   team: "HOME" | "AWAY" | null;
   playerName: string | null;

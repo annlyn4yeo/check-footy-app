@@ -31,7 +31,7 @@ export async function GET(
     homeTeam: fixture.homeTeam,
     awayTeam: fixture.awayTeam,
     updatedAt: fixture.updatedAt,
-    matchEvents: fixture.events.map((event) => ({
+    matchEvents: fixture.matchEvents.map((event) => ({
       ...event,
       providerEventId: event.providerEventId.toString(),
       team:

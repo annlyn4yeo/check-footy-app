@@ -17,6 +17,7 @@ type IngestEventInput = {
     | "RED_CARD"
     | "SUBSTITUTION"
     | "VAR";
+  providerTeamId?: number | null;
   playerName?: string | null;
   assistName?: string | null;
 };
@@ -40,6 +41,30 @@ type FixtureEventPayload = {
   team: "HOME" | "AWAY";
   createdAt: string;
 };
+
+function resolveFixtureTeam(
+  fixture: {
+    homeTeamId: string;
+    awayTeamId: string;
+    homeTeam: { providerId: number };
+    awayTeam: { providerId: number };
+  },
+  providerTeamId: number | null | undefined,
+): { teamId: string | null; teamSide: "HOME" | "AWAY" } {
+  if (providerTeamId == null) {
+    return { teamId: null, teamSide: "HOME" };
+  }
+
+  if (providerTeamId === fixture.homeTeam.providerId) {
+    return { teamId: fixture.homeTeamId, teamSide: "HOME" };
+  }
+
+  if (providerTeamId === fixture.awayTeam.providerId) {
+    return { teamId: fixture.awayTeamId, teamSide: "AWAY" };
+  }
+
+  return { teamId: null, teamSide: "HOME" };
+}
 
 function isValidStatusTransition(current: string, incoming: string): boolean {
   if (current === incoming) return true;
@@ -67,6 +92,20 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
 
     const fixture = await tx.fixture.findUnique({
       where: { providerFixtureId: payload.providerFixtureId },
+      select: {
+        id: true,
+        providerLastUpdatedAt: true,
+        status: true,
+        minute: true,
+        homeTeamId: true,
+        awayTeamId: true,
+        homeTeam: {
+          select: { providerId: true },
+        },
+        awayTeam: {
+          select: { providerId: true },
+        },
+      },
     });
 
     if (!fixture) {
@@ -164,11 +203,14 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
           minute: event.minute,
           extraMinute: event.extraMinute ?? null,
           type: event.type,
+          teamId: resolveFixtureTeam(fixture, event.providerTeamId).teamId,
           playerName: event.playerName ?? null,
           assistName: event.assistName ?? null,
           providerUpdatedAt: new Date(),
         },
       });
+
+      const mappedTeam = resolveFixtureTeam(fixture, event.providerTeamId);
 
       createdEvents.push({
         type: "fixture.event",
@@ -181,7 +223,7 @@ export async function ingestFixturePayload(payload: IngestFixturePayload) {
           event.type === "OWN_GOAL"
             ? "GOAL"
             : "OTHER",
-        team: "HOME", // refine later if you add team inference
+        team: mappedTeam.teamSide,
         createdAt: new Date().toISOString(),
       });
 

@@ -13,7 +13,17 @@ type FixtureUpdate = {
   updatedAt: string;
 };
 
-const WS_URL = "ws://localhost:4000";
+function resolveWsUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_REALTIME_WS_URL;
+  if (configured) return configured;
+
+  if (typeof window === "undefined") {
+    return "ws://localhost:4000";
+  }
+
+  const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+  return `${protocol}://${window.location.hostname}:4000`;
+}
 
 export function useFixturesLive(initialFixtures: FixtureListItem[]) {
   const [fixtures, setFixtures] = useState(initialFixtures);
@@ -26,7 +36,7 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
   useEffect(() => {
     if (initialFixtures.length === 0) return;
 
-    const socket = new WebSocket(WS_URL);
+    const socket = new WebSocket(resolveWsUrl());
     socketRef.current = socket;
 
     socket.onopen = () => {

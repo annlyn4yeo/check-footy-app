@@ -20,14 +20,16 @@ const fixtureListSelect = {
     select: {
       providerId: true,
       name: true,
-      logoUrl: true,
+      shortName: true,
+      crestUrl: true,
     },
   },
   awayTeam: {
     select: {
       providerId: true,
       name: true,
-      logoUrl: true,
+      shortName: true,
+      crestUrl: true,
     },
   },
 } satisfies Prisma.FixtureSelect;
@@ -37,11 +39,12 @@ const fixtureDetailSelect = {
   homeTeamId: true,
   awayTeamId: true,
   updatedAt: true,
-  events: {
+  matchEvents: {
     orderBy: [{ minute: "desc" }, { providerEventId: "desc" }],
     select: {
       providerEventId: true,
       minute: true,
+      extraMinute: true,
       type: true,
       teamId: true,
       playerName: true,
@@ -67,7 +70,7 @@ export interface IFixtureRepository {
       league: true;
       homeTeam: true;
       awayTeam: true;
-      events: true;
+      matchEvents: true;
     };
   }> | null>;
 
@@ -86,7 +89,7 @@ export const FixtureRepository: IFixtureRepository = {
         league: true,
         homeTeam: true,
         awayTeam: true,
-        events: {
+        matchEvents: {
           orderBy: [
             { minute: "asc" },
             { extraMinute: "asc" },

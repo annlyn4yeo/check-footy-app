@@ -5,16 +5,42 @@ import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   useFixtureSubscription,
-  type FixtureUpdate,
   type FixtureEvent,
 } from "@/app/hooks/useFixtureSubscription";
 import type { FixtureSnapshot } from "@/app/types/fixture";
 import "./fixture.css";
 
+function formatEventLabel(eventType: string | undefined, kind: "GOAL" | "OTHER") {
+  if (!eventType) return kind;
+
+  switch (eventType) {
+    case "PENALTY_GOAL":
+      return "PENALTY GOAL";
+    case "OWN_GOAL":
+      return "OWN GOAL";
+    case "YELLOW_CARD":
+      return "YELLOW CARD";
+    case "RED_CARD":
+      return "RED CARD";
+    default:
+      return eventType.replaceAll("_", " ");
+  }
+}
+
+function eventStyleType(eventType: string | undefined, kind: "GOAL" | "OTHER") {
+  if (kind === "GOAL") return "goal";
+  if (!eventType) return "other";
+
+  if (eventType.includes("CARD")) return "card";
+  if (eventType === "SUBSTITUTION") return "substitution";
+  if (eventType === "VAR") return "var";
+  return "other";
+}
+
 export default function FixturePage() {
   const params = useParams();
   const fixtureId = Number(params.providerFixtureId);
-  const [displayMinute, setDisplayMinute] = useState<number | null>(null);
+  const [nowMs, setNowMs] = useState(() => Date.now());
   const [initialEvents, setInitialEvents] = useState<FixtureEvent[]>([]);
   const [snapshot, setSnapshot] = useState<FixtureSnapshot | null>(null);
 
@@ -22,6 +48,7 @@ export default function FixturePage() {
     data: liveData,
     events,
     connected,
+    hasConnectedOnce,
   } = useFixtureSubscription(fixtureId, initialEvents);
 
   useEffect(() => {
@@ -47,7 +74,10 @@ export default function FixturePage() {
             event.type === "OWN_GOAL"
               ? "GOAL"
               : "OTHER",
-          team: event.team ?? "HOME",
+          team: event.team,
+          eventType: event.type,
+          playerName: event.playerName,
+          assistName: event.assistName,
           createdAt: event.createdAt,
         })),
       );
@@ -58,25 +88,30 @@ export default function FixturePage() {
 
   const data = liveData ?? snapshot;
   const scoreKey = `${data?.scoreHome}-${data?.scoreAway}`;
+  const isLive = data?.status === "LIVE";
 
   useEffect(() => {
-    if (typeof data?.minute !== "number") return;
-    setDisplayMinute(data.minute);
-  }, [data?.minute]);
-
-  useEffect(() => {
-    if (!data || data.status !== "LIVE") return;
-    if (displayMinute == null) return;
+    if (!isLive) return;
 
     const interval = setInterval(() => {
-      setDisplayMinute((prev) => {
-        if (prev == null) return prev;
-        return prev + 1;
-      });
+      setNowMs(Date.now());
     }, 60_000);
 
     return () => clearInterval(interval);
-  }, [data?.status, displayMinute]);
+  }, [isLive]);
+
+  const displayMinute = (() => {
+    if (typeof data?.minute !== "number") return null;
+    if (data.status !== "LIVE") return data.minute;
+
+    const updatedAtMs = new Date(data.updatedAt).getTime();
+    const elapsedMinutes = Math.max(
+      0,
+      Math.floor((nowMs - updatedAtMs) / 60_000),
+    );
+
+    return data.minute + elapsedMinutes;
+  })();
 
   return (
     <div className="fixture-root">
@@ -86,9 +121,9 @@ export default function FixturePage() {
           {snapshot?.league.country ? ` (${snapshot.league.country})` : ""}
         </div>
         <div className="teams-row">
-          <span>{snapshot?.homeTeam.name ?? "Home"}</span>
+          <span>{snapshot?.homeTeam.shortName ?? snapshot?.homeTeam.name ?? "Home"}</span>
           <span>vs</span>
-          <span>{snapshot?.awayTeam.name ?? "Away"}</span>
+          <span>{snapshot?.awayTeam.shortName ?? snapshot?.awayTeam.name ?? "Away"}</span>
         </div>
       </div>
 
@@ -125,10 +160,19 @@ export default function FixturePage() {
           transition={{ duration: 0.15 }}
           className="minute"
         >
-          {displayMinute != null ? `${displayMinute}'` : ""}
+          {displayMinute != null ? (
+            <>
+              {displayMinute}
+              &apos;
+            </>
+          ) : (
+            ""
+          )}
         </motion.div>
 
-        {!connected && <div className="connection-state">Syncing...</div>}
+        {hasConnectedOnce && !connected && (
+          <div className="connection-state">Syncing...</div>
+        )}
       </div>
 
       <div className="timeline">
@@ -138,10 +182,23 @@ export default function FixturePage() {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.18 }}
-            className={`event ${event.team.toLowerCase()}`}
+            className={`event ${event.team ? event.team.toLowerCase() : "neutral"} ${eventStyleType(event.eventType, event.kind)}`}
           >
-            <span className="event-minute">{event.minute}'</span>
-            <span className="event-label">{event.kind}</span>
+            <span className="event-minute">
+              {event.minute}
+              &apos;
+            </span>
+            <div className="event-main">
+              <span className="event-label">
+                {formatEventLabel(event.eventType, event.kind)}
+              </span>
+              {(event.playerName || event.assistName) && (
+                <span className="event-meta">
+                  {event.playerName ?? "Unknown"}
+                  {event.assistName ? ` (Assist: ${event.assistName})` : ""}
+                </span>
+              )}
+            </div>
           </motion.div>
         ))}
       </div>

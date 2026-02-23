@@ -53,7 +53,8 @@ export default function HomePage() {
                   marginBottom: 4,
                 }}
               >
-                {fixture.homeTeam.name} vs {fixture.awayTeam.name}
+                {fixture.homeTeam.shortName ?? fixture.homeTeam.name} vs{" "}
+                {fixture.awayTeam.shortName ?? fixture.awayTeam.name}
               </div>
 
               <div
@@ -94,7 +95,7 @@ export default function HomePage() {
                   color: "var(--accent-primary)",
                 }}
               >
-                LIVE {fixture.minute}'
+                LIVE {fixture.minute}&apos;
               </div>
             )}
           </motion.div>
