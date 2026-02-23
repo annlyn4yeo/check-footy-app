@@ -4,10 +4,12 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .scoreboard {
-  background: linear-gradient(180deg, var(--bg-elevated), #0e141b);
+  background: var(--bg-surface);
   padding: var(--space-8);
   border-radius: var(--radius-lg);
   text-align: center;
@@ -22,50 +24,34 @@
 }
 
 .status-badge {
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
 }
 
 .status-badge.live {
-  color: var(--accent-live);
+  color: var(--accent-primary);
 }
 
 .live-indicator {
-  width: 10px;
-  height: 10px;
-  background: var(--accent-live);
+  width: 8px;
+  height: 8px;
+  background: var(--accent-primary);
   border-radius: 50%;
-  box-shadow: 0 0 12px var(--accent-live);
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.4);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  animation: pulse 2s ease-out infinite;
 }
 
 .score {
-  font-size: 72px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .minute {
   margin-top: var(--space-4);
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   color: var(--text-muted);
 }
 
@@ -75,9 +61,39 @@
   color: var(--danger);
 }
 
-.timeline-placeholder {
-  background: var(--bg-elevated);
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.event {
+  background: var(--bg-surface);
+  padding: var(--space-4);
   border-radius: var(--radius-md);
-  padding: var(--space-6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-minute {
+  font-size: 13px;
   color: var(--text-muted);
+}
+
+.event-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.9;
+  }
 }

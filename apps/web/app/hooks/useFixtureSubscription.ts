@@ -24,13 +24,16 @@ export type FixtureEvent = {
 
 const WS_URL = "ws://localhost:4000";
 
-export function useFixtureSubscription(providerFixtureId: number) {
+export function useFixtureSubscription(
+  providerFixtureId: number,
+  initialEvents: FixtureEvent[] = [],
+) {
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectTimeout = useRef<NodeJS.Timeout | null>(null);
   const reconnectAttempts = useRef(0);
 
   const [data, setData] = useState<FixtureUpdate | null>(null);
-  const [events, setEvents] = useState<FixtureEvent[]>([]);
+  const [events, setEvents] = useState<FixtureEvent[]>(initialEvents);
 
   const [connected, setConnected] = useState(false);
 
@@ -98,6 +101,10 @@ export function useFixtureSubscription(providerFixtureId: number) {
       socketRef.current?.close();
     };
   }, [providerFixtureId]);
+
+  useEffect(() => {
+    setEvents(initialEvents);
+  }, [initialEvents]);
 
   return { data, events, connected };
 }

@@ -6,20 +6,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   useFixtureSubscription,
   FixtureUpdate,
+  FixtureEvent,
 } from "@/app/hooks/useFixtureSubscription";
 import "./fixture.css";
 
 export default function FixturePage() {
   const params = useParams();
   const fixtureId = Number(params.providerFixtureId);
+  const [displayMinute, setDisplayMinute] = useState<number | null>(null);
+  const [initialEvents, setInitialEvents] = useState<FixtureEvent[]>([]);
+  const [snapshot, setSnapshot] = useState<FixtureUpdate | null>(null);
 
   const {
     data: liveData,
     events,
     connected,
-  } = useFixtureSubscription(fixtureId);
-
-  const [snapshot, setSnapshot] = useState<FixtureUpdate | null>(null);
+  } = useFixtureSubscription(fixtureId, initialEvents);
 
   useEffect(() => {
     async function load() {
@@ -31,6 +33,23 @@ export default function FixturePage() {
 
       const json = await res.json();
       setSnapshot(json);
+
+      setInitialEvents(
+        json.matchEvents?.map((e: any) => ({
+          type: "fixture.event",
+          providerFixtureId: json.providerFixtureId,
+          eventId: e.providerEventId.toString(),
+          minute: e.minute,
+          kind:
+            e.type === "GOAL" ||
+            e.type === "PENALTY_GOAL" ||
+            e.type === "OWN_GOAL"
+              ? "GOAL"
+              : "OTHER",
+          team: "HOME",
+          createdAt: e.createdAt,
+        })) ?? [],
+      );
     }
 
     load();
@@ -39,6 +58,26 @@ export default function FixturePage() {
   const data = liveData ?? snapshot;
 
   const scoreKey = `${data?.scoreHome}-${data?.scoreAway}`;
+
+  useEffect(() => {
+    if (!data?.minute) return;
+
+    setDisplayMinute(data.minute);
+  }, [data?.minute]);
+
+  useEffect(() => {
+    if (!data || data.status !== "LIVE") return;
+    if (displayMinute == null) return;
+
+    const interval = setInterval(() => {
+      setDisplayMinute((prev) => {
+        if (prev == null) return prev;
+        return prev + 1;
+      });
+    }, 60_000);
+
+    return () => clearInterval(interval);
+  }, [data?.status, displayMinute]);
 
   return (
     <div className="fixture-root">
@@ -57,10 +96,10 @@ export default function FixturePage() {
           <AnimatePresence mode="popLayout">
             <motion.div
               key={scoreKey}
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 1.05, opacity: 0 }}
-              transition={{ duration: 0.18 }}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
               className="score"
             >
               {data?.scoreHome ?? 0} : {data?.scoreAway ?? 0}
@@ -75,7 +114,7 @@ export default function FixturePage() {
           transition={{ duration: 0.15 }}
           className="minute"
         >
-          {data?.minute ? `${data.minute}'` : ""}
+          {displayMinute ? `${displayMinute}'` : ""}
         </motion.div>
 
         {!connected && <div className="connection-state">Syncing…</div>}
@@ -85,7 +124,7 @@ export default function FixturePage() {
         {events.map((event) => (
           <motion.div
             key={event.eventId}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.18 }}
             className={`event ${event.team.toLowerCase()}`}

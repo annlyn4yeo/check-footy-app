@@ -22,6 +22,17 @@ export async function GET(
       scoreHome: true,
       scoreAway: true,
       updatedAt: true,
+      events: {
+        orderBy: [{ minute: "desc" }, { providerEventId: "desc" }],
+        select: {
+          providerEventId: true,
+          minute: true,
+          type: true,
+          playerName: true,
+          assistName: true,
+          createdAt: true,
+        },
+      },
     },
   });
 
@@ -29,5 +40,18 @@ export async function GET(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  return NextResponse.json(fixture);
+  const response = {
+    providerFixtureId: fixture.providerFixtureId,
+    status: fixture.status,
+    minute: fixture.minute,
+    scoreHome: fixture.scoreHome,
+    scoreAway: fixture.scoreAway,
+    updatedAt: fixture.updatedAt,
+    matchEvents: fixture.events.map((event) => ({
+      ...event,
+      providerEventId: event.providerEventId.toString(),
+    })),
+  };
+
+  return NextResponse.json(response);
 }
