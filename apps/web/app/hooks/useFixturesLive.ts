@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { FixtureListItem } from "@/app/types/fixture";
 
 type FixtureUpdate = {
   type: "fixture.updated";
@@ -14,11 +15,10 @@ type FixtureUpdate = {
 
 const WS_URL = "ws://localhost:4000";
 
-export function useFixturesLive(initialFixtures: any[]) {
+export function useFixturesLive(initialFixtures: FixtureListItem[]) {
   const [fixtures, setFixtures] = useState(initialFixtures);
   const socketRef = useRef<WebSocket | null>(null);
 
-  // 🔹 Sync when initial changes
   useEffect(() => {
     setFixtures(initialFixtures);
   }, [initialFixtures]);
@@ -30,26 +30,32 @@ export function useFixturesLive(initialFixtures: any[]) {
     socketRef.current = socket;
 
     socket.onopen = () => {
-      for (const f of initialFixtures) {
+      for (const fixture of initialFixtures) {
         socket.send(
           JSON.stringify({
             type: "subscribe",
-            fixtureId: f.providerFixtureId,
+            fixtureId: fixture.providerFixtureId,
           }),
         );
       }
     };
 
     socket.onmessage = (event) => {
-      const parsed = JSON.parse(event.data);
+      const parsed = JSON.parse(event.data) as FixtureUpdate;
 
       if (parsed.type !== "fixture.updated") return;
 
       setFixtures((prev) =>
-        prev.map((f) =>
-          f.providerFixtureId === parsed.providerFixtureId
-            ? { ...f, ...parsed }
-            : f,
+        prev.map((fixture) =>
+          fixture.providerFixtureId === parsed.providerFixtureId
+            ? {
+                ...fixture,
+                status: parsed.status,
+                minute: parsed.minute,
+                scoreHome: parsed.scoreHome,
+                scoreAway: parsed.scoreAway,
+              }
+            : fixture,
         ),
       );
     };

@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useFixturesLive } from "@/app/hooks/useFixturesLive";
+import type { FixtureListItem } from "@/app/types/fixture";
 
 export default function HomePage() {
-  const [initial, setInitial] = useState<any[]>([]);
+  const [initial, setInitial] = useState<FixtureListItem[]>([]);
 
   useEffect(() => {
     fetch("/api/fixtures", { cache: "no-store" })
       .then((res) => res.json())
-      .then(setInitial);
+      .then((json: FixtureListItem[]) => setInitial(json));
   }, []);
 
   const fixtures = useFixturesLive(initial);
@@ -24,10 +25,10 @@ export default function HomePage() {
         margin: "0 auto",
       }}
     >
-      {fixtures.map((f) => (
+      {fixtures.map((fixture) => (
         <Link
-          key={f.providerFixtureId}
-          href={`/fixtures/${f.providerFixtureId}`}
+          key={fixture.providerFixtureId}
+          href={`/fixtures/${fixture.providerFixtureId}`}
         >
           <motion.div
             whileHover={{ scale: 0.99 }}
@@ -41,6 +42,7 @@ export default function HomePage() {
               justifyContent: "space-between",
               alignItems: "center",
               cursor: "pointer",
+              gap: 16,
             }}
           >
             <div>
@@ -51,7 +53,18 @@ export default function HomePage() {
                   marginBottom: 4,
                 }}
               >
-                Fixture {f.providerFixtureId}
+                {fixture.homeTeam.name} vs {fixture.awayTeam.name}
+              </div>
+
+              <div
+                style={{
+                  fontSize: 12,
+                  color: "var(--text-muted)",
+                  marginBottom: 2,
+                }}
+              >
+                {fixture.league.name}
+                {fixture.league.country ? ` (${fixture.league.country})` : ""}
               </div>
 
               <div
@@ -60,7 +73,7 @@ export default function HomePage() {
                   color: "var(--text-muted)",
                 }}
               >
-                {f.status}
+                {fixture.status}
               </div>
             </div>
 
@@ -70,10 +83,10 @@ export default function HomePage() {
                 fontWeight: 700,
               }}
             >
-              {f.scoreHome} : {f.scoreAway}
+              {fixture.scoreHome} : {fixture.scoreAway}
             </div>
 
-            {f.isLive && (
+            {fixture.isLive && (
               <div
                 style={{
                   fontSize: 12,
@@ -81,7 +94,7 @@ export default function HomePage() {
                   color: "var(--accent-primary)",
                 }}
               >
-                LIVE {f.minute}'
+                LIVE {fixture.minute}'
               </div>
             )}
           </motion.div>

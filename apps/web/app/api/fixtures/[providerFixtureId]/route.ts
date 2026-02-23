@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@checkfooty/db";
+import { FixtureRepository } from "@checkfooty/db";
 
 export async function GET(
   _: Request,
@@ -13,28 +13,7 @@ export async function GET(
     return NextResponse.json({ error: "Invalid id" }, { status: 400 });
   }
 
-  const fixture = await prisma.fixture.findUnique({
-    where: { providerFixtureId: id },
-    select: {
-      providerFixtureId: true,
-      status: true,
-      minute: true,
-      scoreHome: true,
-      scoreAway: true,
-      updatedAt: true,
-      events: {
-        orderBy: [{ minute: "desc" }, { providerEventId: "desc" }],
-        select: {
-          providerEventId: true,
-          minute: true,
-          type: true,
-          playerName: true,
-          assistName: true,
-          createdAt: true,
-        },
-      },
-    },
-  });
+  const fixture = await FixtureRepository.findPublicByProviderFixtureId(id);
 
   if (!fixture) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -46,10 +25,21 @@ export async function GET(
     minute: fixture.minute,
     scoreHome: fixture.scoreHome,
     scoreAway: fixture.scoreAway,
+    isLive: fixture.isLive,
+    kickoffUtc: fixture.kickoffUtc,
+    league: fixture.league,
+    homeTeam: fixture.homeTeam,
+    awayTeam: fixture.awayTeam,
     updatedAt: fixture.updatedAt,
     matchEvents: fixture.events.map((event) => ({
       ...event,
       providerEventId: event.providerEventId.toString(),
+      team:
+        event.teamId === fixture.homeTeamId
+          ? "HOME"
+          : event.teamId === fixture.awayTeamId
+            ? "AWAY"
+            : null,
     })),
   };
 
