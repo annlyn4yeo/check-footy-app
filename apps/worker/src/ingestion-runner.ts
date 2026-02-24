@@ -10,7 +10,6 @@ const MAX_CONCURRENT = 3;
 
 let isRunning = false;
 const provider = createProvider();
-const providerFixtureId = 1001;
 
 async function processFixture(providerFixtureId: number) {
   const update = await provider.getFixtureUpdate(providerFixtureId);

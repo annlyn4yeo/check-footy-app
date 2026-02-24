@@ -1,12 +1,24 @@
 import { logger } from "./logger.js";
 import { startHeartbeat } from "./heartbeat.js";
-import { prisma } from "@checkfooty/db";
-import { startIngestionLoop } from "./ingestion-runner.js";
+import { loadWorkerEnv } from "./env.js";
+
+const loadedEnvFiles = loadWorkerEnv();
 
 async function bootstrap() {
-  logger.info("Worker booting");
+  logger.info(
+    {
+      loadedEnvFiles,
+      fixtureProvider: process.env.FIXTURE_PROVIDER ?? "api",
+    },
+    "Worker booting",
+  );
 
   try {
+    const [{ prisma }, { startIngestionLoop }] = await Promise.all([
+      import("@checkfooty/db"),
+      import("./ingestion-runner.js"),
+    ]);
+
     await prisma.$queryRaw`SELECT 1`;
     logger.info("Database connection verified");
 

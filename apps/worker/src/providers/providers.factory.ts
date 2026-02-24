@@ -3,12 +3,13 @@ import { ApiFootballProvider } from "./api-football.provider.js";
 import type { FixtureProvider } from "./provider.interface.js";
 
 export function createProvider(): FixtureProvider {
-  const providerType = process.env.FIXTURE_PROVIDER ?? "simulated";
+  const providerType = (process.env.FIXTURE_PROVIDER ?? "api").toLowerCase();
 
   switch (providerType) {
     case "simulated":
       return new SimulatedProvider();
 
+    case "api":
     case "api-football":
       return new ApiFootballProvider();
 
