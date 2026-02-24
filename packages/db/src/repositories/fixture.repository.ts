@@ -1,5 +1,5 @@
 import { prisma } from "../client.js";
-import type { Prisma } from "@prisma/client";
+import type { FixtureStatus, Prisma } from "@prisma/client";
 
 const fixtureListSelect = {
   providerFixtureId: true,
@@ -75,6 +75,18 @@ export interface IFixtureRepository {
   }> | null>;
 
   findLive(): Promise<Prisma.FixtureGetPayload<{}>[]>;
+  upsertByProviderFixtureId(input: {
+    providerFixtureId: number;
+    leagueId: string;
+    homeTeamId: string;
+    awayTeamId: string;
+    kickoffUtc: Date;
+    minute: number;
+    scoreHome: number;
+    scoreAway: number;
+    status: FixtureStatus;
+    providerLastUpdatedAt?: Date | null;
+  }): Promise<Prisma.FixtureGetPayload<{}>>;
   findPublicList(): Promise<FixturePublicListItem[]>;
   findPublicByProviderFixtureId(
     providerFixtureId: number,
@@ -104,6 +116,40 @@ export const FixtureRepository: IFixtureRepository = {
     return prisma.fixture.findMany({
       where: { isLive: true },
       orderBy: { kickoffUtc: "asc" },
+    });
+  },
+
+  upsertByProviderFixtureId(input) {
+    const isLive = input.status === "LIVE";
+
+    return prisma.fixture.upsert({
+      where: { providerFixtureId: input.providerFixtureId },
+      update: {
+        leagueId: input.leagueId,
+        homeTeamId: input.homeTeamId,
+        awayTeamId: input.awayTeamId,
+        kickoffUtc: input.kickoffUtc,
+        minute: input.minute,
+        scoreHome: input.scoreHome,
+        scoreAway: input.scoreAway,
+        status: input.status,
+        isLive,
+        providerLastUpdatedAt: input.providerLastUpdatedAt ?? null,
+        deletedAt: null,
+      },
+      create: {
+        providerFixtureId: input.providerFixtureId,
+        leagueId: input.leagueId,
+        homeTeamId: input.homeTeamId,
+        awayTeamId: input.awayTeamId,
+        kickoffUtc: input.kickoffUtc,
+        minute: input.minute,
+        scoreHome: input.scoreHome,
+        scoreAway: input.scoreAway,
+        status: input.status,
+        isLive,
+        providerLastUpdatedAt: input.providerLastUpdatedAt ?? null,
+      },
     });
   },
 

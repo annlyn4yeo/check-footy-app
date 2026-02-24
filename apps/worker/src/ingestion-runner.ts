@@ -1,5 +1,6 @@
 import { logger } from "./logger.js";
 import { ingestFixturePayload } from "./services/fixture-ingestion.service.js";
+import { syncProviderFixtures } from "./services/fixture-discovery.service.js";
 import { FixtureRepository } from "@checkfooty/db";
 import { createProvider } from "./providers/providers.factory.js";
 
@@ -29,6 +30,11 @@ export function startIngestionLoop() {
     const start = Date.now();
 
     try {
+      const discoveryResult = await syncProviderFixtures(provider);
+      if (discoveryResult.upserted > 0) {
+        logger.info(discoveryResult, "Fixture discovery sync complete");
+      }
+
       const liveFixtures = await FixtureRepository.findLive();
 
       if (liveFixtures.length === 0) {

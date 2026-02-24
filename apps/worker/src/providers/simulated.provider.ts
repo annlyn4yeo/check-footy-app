@@ -4,6 +4,10 @@ import { FixtureRepository } from "@checkfooty/db";
 import type { ProviderFixtureEvent } from "./provider.interface.js";
 
 export class SimulatedProvider implements FixtureProvider {
+  async discoverFixtures() {
+    return [];
+  }
+
   async getFixtureUpdate(providerFixtureId: number) {
     const fixture =
       await FixtureRepository.findByProviderFixtureId(providerFixtureId);
