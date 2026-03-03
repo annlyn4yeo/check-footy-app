@@ -2,39 +2,72 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { LiveIndicator } from "@/app/components/ui/live-indicator";
+import { MatchTimeline } from "@/app/components/ui/match-timeline";
+import { NavBar } from "@/app/components/ui/nav-bar";
 import {
   useFixtureSubscription,
   type FixtureEvent,
 } from "@/app/hooks/useFixtureSubscription";
 import type { FixtureSnapshot } from "@/app/types/fixture";
-import "./fixture.css";
+import styles from "./fixture-page.module.css";
 
-function formatEventLabel(eventType: string | undefined, kind: "GOAL" | "OTHER") {
-  if (!eventType) return kind;
-
-  switch (eventType) {
-    case "PENALTY_GOAL":
-      return "PENALTY GOAL";
-    case "OWN_GOAL":
-      return "OWN GOAL";
-    case "YELLOW_CARD":
-      return "YELLOW CARD";
-    case "RED_CARD":
-      return "RED CARD";
-    default:
-      return eventType.replaceAll("_", " ");
-  }
+function mapSnapshotEvent(
+  fixtureId: number,
+  event: FixtureSnapshot["matchEvents"][number],
+): FixtureEvent {
+  return {
+    type: "fixture.event",
+    providerFixtureId: fixtureId,
+    eventId: event.providerEventId,
+    minute: event.minute,
+    kind:
+      event.type === "GOAL" ||
+      event.type === "PENALTY_GOAL" ||
+      event.type === "OWN_GOAL"
+        ? "GOAL"
+        : "OTHER",
+    team: event.team,
+    eventType: event.type,
+    playerName: event.playerName,
+    assistName: event.assistName,
+    createdAt: event.createdAt,
+  };
 }
 
-function eventStyleType(eventType: string | undefined, kind: "GOAL" | "OTHER") {
-  if (kind === "GOAL") return "goal";
-  if (!eventType) return "other";
+function formatEventType(type: string | undefined, kind: "GOAL" | "OTHER") {
+  if (kind === "GOAL") return "GOAL";
+  if (!type) return "EVENT";
+  return type.replaceAll("_", " ");
+}
 
-  if (eventType.includes("CARD")) return "card";
-  if (eventType === "SUBSTITUTION") return "substitution";
-  if (eventType === "VAR") return "var";
-  return "other";
+function computeStats(events: FixtureEvent[]) {
+  const homeShots = events.filter(
+    (event) => event.team === "HOME" && event.eventType?.includes("SHOT"),
+  ).length;
+  const awayShots = events.filter(
+    (event) => event.team === "AWAY" && event.eventType?.includes("SHOT"),
+  ).length;
+  const homeCorners = events.filter(
+    (event) => event.team === "HOME" && event.eventType?.includes("CORNER"),
+  ).length;
+  const awayCorners = events.filter(
+    (event) => event.team === "AWAY" && event.eventType?.includes("CORNER"),
+  ).length;
+
+  const totalEvents = Math.max(events.length, 1);
+  const homePossession = Math.round(
+    (events.filter((event) => event.team === "HOME").length / totalEvents) * 100,
+  );
+
+  return {
+    homeShots,
+    awayShots,
+    homeCorners,
+    awayCorners,
+    homePossession,
+    awayPossession: 100 - homePossession,
+  };
 }
 
 export default function FixturePage() {
@@ -43,12 +76,12 @@ export default function FixturePage() {
   const [nowMs, setNowMs] = useState(() => Date.now());
   const [initialEvents, setInitialEvents] = useState<FixtureEvent[]>([]);
   const [snapshot, setSnapshot] = useState<FixtureSnapshot | null>(null);
-
   const {
     data: liveData,
     events,
     connected,
     hasConnectedOnce,
+    scoreChangeTick,
   } = useFixtureSubscription(fixtureId, initialEvents);
 
   useEffect(() => {
@@ -62,32 +95,13 @@ export default function FixturePage() {
       const json = (await res.json()) as FixtureSnapshot;
       setSnapshot(json);
 
-      setInitialEvents(
-        json.matchEvents.map((event) => ({
-          type: "fixture.event",
-          providerFixtureId: json.providerFixtureId,
-          eventId: event.providerEventId,
-          minute: event.minute,
-          kind:
-            event.type === "GOAL" ||
-            event.type === "PENALTY_GOAL" ||
-            event.type === "OWN_GOAL"
-              ? "GOAL"
-              : "OTHER",
-          team: event.team,
-          eventType: event.type,
-          playerName: event.playerName,
-          assistName: event.assistName,
-          createdAt: event.createdAt,
-        })),
-      );
+      setInitialEvents(json.matchEvents.map((event) => mapSnapshotEvent(json.providerFixtureId, event)));
     }
 
     load();
   }, [fixtureId]);
 
   const data = liveData ?? snapshot;
-  const scoreKey = `${data?.scoreHome}-${data?.scoreAway}`;
   const isLive = data?.status === "LIVE";
 
   useEffect(() => {
@@ -113,95 +127,80 @@ export default function FixturePage() {
     return data.minute + elapsedMinutes;
   })();
 
+  const stats = computeStats(events);
+
+  if (!snapshot) {
+    return (
+      <main>
+        <NavBar liveCount={0} active="LIVE" />
+      </main>
+    );
+  }
+
   return (
-    <div className="fixture-root">
-      <div className="teams-card">
-        <div className="league-name">
-          {snapshot?.league.name}
-          {snapshot?.league.country ? ` (${snapshot.league.country})` : ""}
-        </div>
-        <div className="teams-row">
-          <span>{snapshot?.homeTeam.shortName ?? snapshot?.homeTeam.name ?? "Home"}</span>
-          <span>vs</span>
-          <span>{snapshot?.awayTeam.shortName ?? snapshot?.awayTeam.name ?? "Away"}</span>
-        </div>
-      </div>
+    <main>
+      <NavBar liveCount={snapshot.isLive ? 1 : 0} active="LIVE" />
 
-      <div className="scoreboard">
-        <div className="status-row">
-          <span
-            className={`status-badge ${data?.status === "LIVE" ? "live" : ""}`}
-          >
-            {data?.status ?? "-"}
-          </span>
+      <section className={`${styles.hero} section-block`}>
+        <h1 className={styles.teams}>
+          {snapshot.homeTeam.shortName ?? snapshot.homeTeam.name}
+          <span> VS </span>
+          {snapshot.awayTeam.shortName ?? snapshot.awayTeam.name}
+        </h1>
 
-          {data?.status === "LIVE" && <span className="live-indicator" />}
+        <div className={`${styles.heroScore} ${scoreChangeTick ? styles.heroScorePulse : ""}`}>
+          <span>{data?.scoreHome ?? 0}</span>
+          <span>:</span>
+          <span>{data?.scoreAway ?? 0}</span>
         </div>
 
-        <div className="score-row">
-          <AnimatePresence mode="popLayout">
-            <motion.div
-              key={scoreKey}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.18, ease: "easeOut" }}
-              className="score"
-            >
-              {data?.scoreHome ?? 0} : {data?.scoreAway ?? 0}
-            </motion.div>
-          </AnimatePresence>
+        <div className={styles.heroMeta}>
+          {isLive ? <LiveIndicator /> : <span className={styles.status}>{data?.status ?? "-"}</span>}
+          {displayMinute != null && <span className={styles.minute}>{displayMinute}&apos;</span>}
+          {hasConnectedOnce && !connected && <span className={styles.sync}>SYNCING</span>}
+        </div>
+      </section>
+
+      <section className={`${styles.twoCol} section-block`}>
+        <div className={styles.panel}>
+          <h2 className={styles.heading}>Match Timeline</h2>
+          <MatchTimeline events={events} liveMinute={displayMinute} />
         </div>
 
-        <motion.div
-          key={data?.minute}
-          initial={{ opacity: 0.6 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.15 }}
-          className="minute"
-        >
-          {displayMinute != null ? (
-            <>
-              {displayMinute}
-              &apos;
-            </>
-          ) : (
-            ""
-          )}
-        </motion.div>
-
-        {hasConnectedOnce && !connected && (
-          <div className="connection-state">Syncing...</div>
-        )}
-      </div>
-
-      <div className="timeline">
-        {events.map((event) => (
-          <motion.div
-            key={event.eventId}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.18 }}
-            className={`event ${event.team ? event.team.toLowerCase() : "neutral"} ${eventStyleType(event.eventType, event.kind)}`}
-          >
-            <span className="event-minute">
-              {event.minute}
-              &apos;
-            </span>
-            <div className="event-main">
-              <span className="event-label">
-                {formatEventLabel(event.eventType, event.kind)}
-              </span>
-              {(event.playerName || event.assistName) && (
-                <span className="event-meta">
-                  {event.playerName ?? "Unknown"}
-                  {event.assistName ? ` (Assist: ${event.assistName})` : ""}
-                </span>
-              )}
+        <div className={styles.panel}>
+          <h2 className={styles.heading}>Match Stats</h2>
+          <div className={styles.stats}>
+            <div className={styles.statRow}>
+              <span>{stats.homePossession}%</span>
+              <span>Possession</span>
+              <span>{stats.awayPossession}%</span>
             </div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
+            <div className={styles.statRow}>
+              <span>{stats.homeShots}</span>
+              <span>Shots</span>
+              <span>{stats.awayShots}</span>
+            </div>
+            <div className={styles.statRow}>
+              <span>{stats.homeCorners}</span>
+              <span>Corners</span>
+              <span>{stats.awayCorners}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-block">
+        <h2 className="section-title">Full Event Log</h2>
+        <div className={styles.logList}>
+          {events.map((event) => (
+            <article key={event.eventId} className={styles.logItem}>
+              <span className={styles.logMinute}>{event.minute}&apos;</span>
+              <span className={styles.logType}>{formatEventType(event.eventType, event.kind)}</span>
+              <span className={styles.logPlayer}>{event.playerName ?? "Unknown"}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }

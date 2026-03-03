@@ -1,47 +1,82 @@
 :root {
-  --bg-primary: #0d1117;
-  --bg-surface: #161b22;
-  --bg-surface-hover: #1c2128;
+  --bg: #0d0d0d;
+  --surface: #1a1a1a;
+  --surface-2: #2a2a2a;
+  --lime: #c8ff00;
+  --red: #ff2d2d;
+  --yellow: #ffd600;
+  --white: #f0f0f0;
+  --muted: #6b6b6b;
 
-  --text-primary: #e6edf3;
-  --text-secondary: rgba(230, 237, 243, 0.7);
-  --text-muted: rgba(230, 237, 243, 0.55);
-  --text-disabled: rgba(230, 237, 243, 0.4);
+  --font-display: var(--font-anton), sans-serif;
+  --font-body: var(--font-barlow-condensed), sans-serif;
+  --font-mono: var(--font-dm-mono), monospace;
 
-  --accent-primary: #c6ff00;
-  --accent-secondary: #5b8cff;
-
-  --success: #2ea043;
-  --danger: #da3633;
-
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-6: 24px;
-  --space-8: 32px;
-
-  --duration-fast: 150ms;
-  --duration-normal: 200ms;
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family:
-    "Inter",
-    system-ui,
-    -apple-system,
-    sans-serif;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--white);
+}
+
+body.app-body {
+  font-family: var(--font-body, "Barlow Condensed", sans-serif);
   font-feature-settings: "tnum";
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main {
+  width: min(1400px, calc(100vw - 48px));
+  margin: 0 auto;
+  padding: 32px 0 96px;
+}
+
+.section-block {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 64px;
+}
+
+.section-title {
+  margin: 0;
+  font-family: var(--font-display, "Anton", sans-serif);
+  font-size: clamp(44px, 7vw, 72px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.section-title.lime {
+  color: var(--lime);
+}
+
+@media (max-width: 900px) {
+  main {
+    width: min(100vw, calc(100vw - 28px));
+    padding-top: 20px;
+  }
+
+  .section-block {
+    margin-top: 52px;
+    gap: 20px;
+  }
+
+  .section-title {
+    font-size: clamp(34px, 12vw, 48px);
+  }
 }

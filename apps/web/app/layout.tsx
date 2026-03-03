@@ -1,15 +1,29 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Anton, Barlow_Condensed, DM_Mono } from "next/font/google";
 import "./globals.css";
+import { AppProviders } from "@/app/components/providers/app-providers";
 
-const inter = Inter({
+const anton = Anton({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400"],
+  variable: "--font-anton",
+});
+
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-barlow-condensed",
+});
+
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-dm-mono",
 });
 
 export const metadata: Metadata = {
   title: "Check-Footy",
-  description: "Modern football intelligence app",
+  description: "Live football experience",
 };
 
 export default function RootLayout({
@@ -18,8 +32,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+    <html
+      lang="en"
+      className={`${anton.variable} ${barlowCondensed.variable} ${dmMono.variable}`}
+    >
+      <body className="app-body">
+        <AppProviders>{children}</AppProviders>
+      </body>
     </html>
   );
 }

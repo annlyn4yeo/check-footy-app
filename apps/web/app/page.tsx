@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import { NavBar } from "@/app/components/ui/nav-bar";
+import { FixtureCard } from "@/app/components/ui/fixture-card";
 import { useFixturesLive } from "@/app/hooks/useFixturesLive";
 import type { FixtureListItem } from "@/app/types/fixture";
+import styles from "./page.module.css";
 
 export default function HomePage() {
   const [initial, setInitial] = useState<FixtureListItem[]>([]);
+  const [activeTab, setActiveTab] = useState<"LIVE" | "TODAY" | "UPCOMING" | "RESULTS">("LIVE");
 
   useEffect(() => {
     fetch("/api/fixtures", { cache: "no-store" })
@@ -16,91 +18,56 @@ export default function HomePage() {
   }, []);
 
   const fixtures = useFixturesLive(initial);
+  const liveFixtures = fixtures.filter(
+    (fixture) => fixture.status === "LIVE" || fixture.isLive,
+  );
+  const nonLiveFixtures = fixtures.filter(
+    (fixture) => !(fixture.status === "LIVE" || fixture.isLive),
+  );
+
+  const visibleLive = activeTab === "UPCOMING" || activeTab === "RESULTS" ? [] : liveFixtures;
+  const visibleToday =
+    activeTab === "LIVE"
+      ? nonLiveFixtures
+      : nonLiveFixtures.filter((fixture) => {
+          if (activeTab === "UPCOMING") {
+            return fixture.status !== "FT" && fixture.status !== "FINISHED";
+          }
+          if (activeTab === "RESULTS") {
+            return fixture.status === "FT" || fixture.status === "FINISHED";
+          }
+          return true;
+        });
 
   return (
-    <div
-      style={{
-        padding: 32,
-        maxWidth: 720,
-        margin: "0 auto",
-      }}
-    >
-      {fixtures.map((fixture) => (
-        <Link
-          key={fixture.providerFixtureId}
-          href={`/fixtures/${fixture.providerFixtureId}`}
-        >
-          <motion.div
-            whileHover={{ scale: 0.99 }}
-            transition={{ duration: 0.15 }}
-            style={{
-              padding: 16,
-              marginBottom: 16,
-              borderRadius: 12,
-              background: "var(--bg-surface)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              cursor: "pointer",
-              gap: 16,
-            }}
-          >
-            <div>
-              <div
-                style={{
-                  fontSize: 14,
-                  fontWeight: 600,
-                  marginBottom: 4,
-                }}
-              >
-                {fixture.homeTeam.shortName ?? fixture.homeTeam.name} vs{" "}
-                {fixture.awayTeam.shortName ?? fixture.awayTeam.name}
-              </div>
+    <main>
+      <NavBar liveCount={liveFixtures.length} active={activeTab} onChange={setActiveTab} />
 
-              <div
-                style={{
-                  fontSize: 12,
-                  color: "var(--text-muted)",
-                  marginBottom: 2,
-                }}
-              >
-                {fixture.league.name}
-                {fixture.league.country ? ` (${fixture.league.country})` : ""}
-              </div>
+      <section className="section-block">
+        <h1 className="section-title lime">Live Now</h1>
+        <div className={styles.grid}>
+          {visibleLive.map((fixture, index) => (
+            <FixtureCard
+              key={fixture.providerFixtureId}
+              fixture={fixture}
+              entryIndex={index}
+            />
+          ))}
+        </div>
+      </section>
 
-              <div
-                style={{
-                  fontSize: 12,
-                  color: "var(--text-muted)",
-                }}
-              >
-                {fixture.status}
-              </div>
-            </div>
-
-            <div
-              style={{
-                fontSize: 24,
-                fontWeight: 700,
-              }}
-            >
-              {fixture.scoreHome} : {fixture.scoreAway}
-            </div>
-
-            {fixture.isLive && (
-              <div
-                style={{
-                  fontSize: 12,
-                  fontWeight: 600,
-                  color: "var(--accent-primary)",
-                }}
-              >
-                LIVE {fixture.minute}&apos;
-              </div>
-            )}
-          </motion.div>
-        </Link>
-      ))}
-    </div>
+      <section className="section-block">
+        <h2 className="section-title">Today</h2>
+        <div className={styles.grid}>
+          {visibleToday.map((fixture, index) => (
+            <FixtureCard
+              key={fixture.providerFixtureId}
+              fixture={fixture}
+              entryIndex={visibleLive.length + index}
+            />
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLiveEventToast } from "@/app/components/ui/live-event-toast";
 
 export type FixtureUpdate = {
   type: "fixture.updated";
@@ -37,6 +38,22 @@ function resolveWsUrl(): string {
   return `${protocol}://${window.location.hostname}:4000`;
 }
 
+function resolveToastType(event: FixtureEvent): "goal" | "red" | "yellow" | "sub" | "other" {
+  if (event.kind === "GOAL") return "goal";
+  if (!event.eventType) return "other";
+  if (event.eventType.includes("RED")) return "red";
+  if (event.eventType.includes("YELLOW")) return "yellow";
+  if (event.eventType.includes("SUB")) return "sub";
+  return "other";
+}
+
+function toToastText(event: FixtureEvent): string {
+  const player = event.playerName?.trim() || "Unknown";
+  if (event.kind === "GOAL") return `Goal · ${player}`;
+  if (!event.eventType) return `Event · ${player}`;
+  return `${event.eventType.replaceAll("_", " ")} · ${player}`;
+}
+
 export function useFixtureSubscription(
   providerFixtureId: number,
   initialEvents: FixtureEvent[] = [],
@@ -47,9 +64,11 @@ export function useFixtureSubscription(
 
   const [data, setData] = useState<FixtureUpdate | null>(null);
   const [events, setEvents] = useState<FixtureEvent[]>(initialEvents);
+  const [scoreChangeTick, setScoreChangeTick] = useState(0);
 
   const [connected, setConnected] = useState(false);
   const [hasConnectedOnce, setHasConnectedOnce] = useState(false);
+  const { addToast } = useLiveEventToast();
 
   useEffect(() => {
     let cancelled = false;
@@ -80,14 +99,31 @@ export function useFixtureSubscription(
           parsed.type === "fixture.updated" &&
           parsed.providerFixtureId === providerFixtureId
         ) {
-          setData(parsed);
+          setData((previous) => {
+            const scoreChanged =
+              previous &&
+              (previous.scoreHome !== parsed.scoreHome ||
+                previous.scoreAway !== parsed.scoreAway);
+
+            if (scoreChanged) {
+              setScoreChangeTick(Date.now());
+            }
+
+            return parsed;
+          });
         }
 
         if (
           parsed.type === "fixture.event" &&
           parsed.providerFixtureId === providerFixtureId
         ) {
-          setEvents((prev) => [parsed, ...prev]);
+          const incoming = parsed as FixtureEvent;
+          setEvents((prev) => [incoming, ...prev]);
+          addToast({
+            type: resolveToastType(incoming),
+            text: toToastText(incoming),
+            minute: incoming.minute,
+          });
         }
       };
 
@@ -115,11 +151,11 @@ export function useFixtureSubscription(
       if (reconnectTimeout.current) clearTimeout(reconnectTimeout.current);
       socketRef.current?.close();
     };
-  }, [providerFixtureId]);
+  }, [addToast, providerFixtureId]);
 
   useEffect(() => {
     setEvents(initialEvents);
   }, [initialEvents]);
 
-  return { data, events, connected, hasConnectedOnce };
+  return { data, events, connected, hasConnectedOnce, scoreChangeTick };
 }
