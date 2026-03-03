@@ -8,9 +8,17 @@ let currentInterval = 5000;
 const MIN_INTERVAL = 5000;
 const MAX_INTERVAL = 60000;
 const MAX_CONCURRENT = 3;
+const DEFAULT_DISCOVERY_SYNC_INTERVAL_MS = 5 * 60 * 1000;
 
 let isRunning = false;
+let lastDiscoverySyncAtMs = 0;
 const provider = createProvider();
+
+function parseMs(value: string | undefined, fallbackMs: number): number {
+  const parsed = Number.parseInt(value ?? "", 10);
+  if (!Number.isFinite(parsed)) return fallbackMs;
+  return Math.max(1_000, parsed);
+}
 
 async function processFixture(providerFixtureId: number) {
   const update = await provider.getFixtureUpdate(providerFixtureId);
@@ -30,9 +38,22 @@ export function startIngestionLoop() {
     const start = Date.now();
 
     try {
-      const discoveryResult = await syncProviderFixtures(provider);
-      if (discoveryResult.upserted > 0) {
-        logger.info(discoveryResult, "Fixture discovery sync complete");
+      const nowMs = Date.now();
+      const discoverySyncIntervalMs = parseMs(
+        process.env.DISCOVERY_SYNC_INTERVAL_MS,
+        DEFAULT_DISCOVERY_SYNC_INTERVAL_MS,
+      );
+
+      const shouldRunDiscovery =
+        lastDiscoverySyncAtMs === 0 ||
+        nowMs - lastDiscoverySyncAtMs >= discoverySyncIntervalMs;
+
+      if (shouldRunDiscovery) {
+        const discoveryResult = await syncProviderFixtures(provider);
+        lastDiscoverySyncAtMs = nowMs;
+        if (discoveryResult.upserted > 0) {
+          logger.info(discoveryResult, "Fixture discovery sync complete");
+        }
       }
 
       const liveFixtures = await FixtureRepository.findLive();

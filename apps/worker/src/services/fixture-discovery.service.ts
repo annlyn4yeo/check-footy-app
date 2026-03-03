@@ -18,13 +18,27 @@ function dedupeFixtures(fixtures: ProviderFixtureSeed[]) {
 export async function syncProviderFixtures(provider: FixtureProvider) {
   const discovered = await provider.discoverFixtures();
   const deduped = dedupeFixtures(discovered);
+  const leagueByProviderId = new Map<number, Awaited<ReturnType<typeof LeagueRepository.upsertByProviderId>>>();
+  const teamByProviderId = new Map<number, Awaited<ReturnType<typeof TeamRepository.upsertByProviderId>>>();
 
   for (const fixture of deduped) {
-    const [league, homeTeam, awayTeam] = await Promise.all([
-      LeagueRepository.upsertByProviderId(fixture.league),
-      TeamRepository.upsertByProviderId(fixture.homeTeam),
-      TeamRepository.upsertByProviderId(fixture.awayTeam),
-    ]);
+    let league = leagueByProviderId.get(fixture.league.providerId);
+    if (!league) {
+      league = await LeagueRepository.upsertByProviderId(fixture.league);
+      leagueByProviderId.set(fixture.league.providerId, league);
+    }
+
+    let homeTeam = teamByProviderId.get(fixture.homeTeam.providerId);
+    if (!homeTeam) {
+      homeTeam = await TeamRepository.upsertByProviderId(fixture.homeTeam);
+      teamByProviderId.set(fixture.homeTeam.providerId, homeTeam);
+    }
+
+    let awayTeam = teamByProviderId.get(fixture.awayTeam.providerId);
+    if (!awayTeam) {
+      awayTeam = await TeamRepository.upsertByProviderId(fixture.awayTeam);
+      teamByProviderId.set(fixture.awayTeam.providerId, awayTeam);
+    }
 
     await FixtureRepository.upsertByProviderFixtureId({
       providerFixtureId: fixture.providerFixtureId,

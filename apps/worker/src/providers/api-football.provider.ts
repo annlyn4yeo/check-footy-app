@@ -7,6 +7,10 @@ import type { ProviderFixtureEvent } from "./provider.interface.js";
 import { logger } from "../logger.js";
 import { createHash } from "node:crypto";
 
+const PREMIER_LEAGUE_ID = 39;
+const DEFAULT_DISCOVERY_TTL_MS = 10 * 60 * 1000;
+const DEFAULT_FIXTURE_UPDATE_TTL_MS = 15 * 1000;
+
 type ApiFootballTeam = {
   id?: number | null;
   name?: string | null;
@@ -185,6 +189,30 @@ function parseLeagueIds(input: string | undefined) {
     .filter((value): value is number => value != null);
 }
 
+function resolveLeagueIds(input: string | undefined): number[] {
+  const configured = parseLeagueIds(input);
+  if (configured.length > 0 && !configured.includes(PREMIER_LEAGUE_ID)) {
+    logger.warn(
+      {
+        configuredLeagueIds: configured,
+        forcedLeagueId: PREMIER_LEAGUE_ID,
+      },
+      "Ignoring non-Premier-League league IDs; provider is restricted to Premier League",
+    );
+  }
+  return [PREMIER_LEAGUE_ID];
+}
+
+function parseTtlMs(
+  value: string | undefined,
+  fallbackMs: number,
+  minMs = 0,
+): number {
+  const parsed = parseNumber(value);
+  if (parsed == null) return fallbackMs;
+  return Math.max(minMs, parsed);
+}
+
 function resolveKickoffUtc(fixture: ApiFootballFixture): Date | null {
   if (
     typeof fixture.timestamp === "number" &&
@@ -357,17 +385,54 @@ async function fetchFixtureResponses(
 }
 
 export class ApiFootballProvider implements FixtureProvider {
+  private discoveryCache:
+    | { expiresAtMs: number; fixtures: ProviderFixtureSeed[] }
+    | null = null;
+
+  private fixtureUpdateCache = new Map<
+    number,
+    {
+      expiresAtMs: number;
+      update: Awaited<ReturnType<FixtureProvider["getFixtureUpdate"]>>;
+    }
+  >();
+
+  private stampFixtures(
+    fixtures: ProviderFixtureSeed[],
+    providerTimestamp: Date,
+  ): ProviderFixtureSeed[] {
+    return fixtures.map((fixture) => ({
+      ...fixture,
+      providerTimestamp,
+    }));
+  }
+
   async discoverFixtures() {
     const config = getApiConfig();
     if (!config) return [];
 
-    const leagueIds = parseLeagueIds(process.env.API_FOOTBALL_LEAGUE_IDS);
+    const nowMs = Date.now();
+    const discoveryTtlMs = parseTtlMs(
+      process.env.API_FOOTBALL_DISCOVERY_TTL_MS,
+      DEFAULT_DISCOVERY_TTL_MS,
+    );
+    if (this.discoveryCache && nowMs < this.discoveryCache.expiresAtMs) {
+      return this.stampFixtures(this.discoveryCache.fixtures, new Date(nowMs));
+    }
+
+    const leagueIds = resolveLeagueIds(process.env.API_FOOTBALL_LEAGUE_IDS);
     const season =
       process.env.API_FOOTBALL_SEASON ?? String(new Date().getUTCFullYear());
 
     const today = new Date().toISOString().slice(0, 10);
 
-    const querySets: URLSearchParams[] = [new URLSearchParams({ live: "all" })];
+    const querySets: URLSearchParams[] = leagueIds.map(
+      (leagueId) =>
+        new URLSearchParams({
+          live: "all",
+          league: String(leagueId),
+        }),
+    );
 
     if (leagueIds.length > 0) {
       for (const leagueId of leagueIds) {
@@ -383,7 +448,7 @@ export class ApiFootballProvider implements FixtureProvider {
       querySets.push(new URLSearchParams({ date: today }));
     }
 
-    const providerTimestamp = new Date();
+    const providerTimestamp = new Date(nowMs);
     const byProviderFixtureId = new Map<number, ProviderFixtureSeed>();
 
     for (const query of querySets) {
@@ -401,12 +466,28 @@ export class ApiFootballProvider implements FixtureProvider {
       }
     }
 
-    return [...byProviderFixtureId.values()];
+    const fixtures = [...byProviderFixtureId.values()];
+    this.discoveryCache = {
+      expiresAtMs: nowMs + discoveryTtlMs,
+      fixtures,
+    };
+    return this.stampFixtures(fixtures, providerTimestamp);
   }
 
   async getFixtureUpdate(providerFixtureId: number) {
     const config = getApiConfig();
     if (!config) return null;
+
+    const nowMs = Date.now();
+    const fixtureUpdateTtlMs = parseTtlMs(
+      process.env.API_FOOTBALL_FIXTURE_UPDATE_TTL_MS,
+      DEFAULT_FIXTURE_UPDATE_TTL_MS,
+      1_000,
+    );
+    const cached = this.fixtureUpdateCache.get(providerFixtureId);
+    if (cached && nowMs < cached.expiresAtMs) {
+      return cached.update;
+    }
 
     const responseItems = await fetchFixtureResponses(
       config.baseUrl,
@@ -418,6 +499,10 @@ export class ApiFootballProvider implements FixtureProvider {
     const fixture = fixtureItem?.fixture;
 
     if (!fixture) {
+      this.fixtureUpdateCache.set(providerFixtureId, {
+        expiresAtMs: nowMs + fixtureUpdateTtlMs,
+        update: null,
+      });
       return null;
     }
 
@@ -430,6 +515,10 @@ export class ApiFootballProvider implements FixtureProvider {
         },
         "API-FOOTBALL status could not be mapped",
       );
+      this.fixtureUpdateCache.set(providerFixtureId, {
+        expiresAtMs: nowMs + fixtureUpdateTtlMs,
+        update: null,
+      });
       return null;
     }
 
@@ -491,10 +580,14 @@ export class ApiFootballProvider implements FixtureProvider {
       events.length > 0;
 
     if (!hasMeaningfulUpdate) {
+      this.fixtureUpdateCache.set(providerFixtureId, {
+        expiresAtMs: nowMs + fixtureUpdateTtlMs,
+        update: null,
+      });
       return null;
     }
 
-    return {
+    const update = {
       providerFixtureId,
       minute,
       scoreHome,
@@ -503,5 +596,10 @@ export class ApiFootballProvider implements FixtureProvider {
       providerTimestamp: new Date(),
       events,
     };
+    this.fixtureUpdateCache.set(providerFixtureId, {
+      expiresAtMs: nowMs + fixtureUpdateTtlMs,
+      update,
+    });
+    return update;
   }
 }
