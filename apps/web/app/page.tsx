@@ -14,7 +14,11 @@ function compareLeague(a: FixtureListItem, b: FixtureListItem) {
 }
 
 function isLiveFixture(fixture: FixtureListItem) {
-  return fixture.status === "LIVE" || fixture.status === "HALF_TIME" || fixture.isLive;
+  return (
+    fixture.status === "LIVE" ||
+    fixture.status === "HALF_TIME" ||
+    fixture.isLive
+  );
 }
 
 function isCompletedFixture(fixture: FixtureListItem) {
@@ -32,12 +36,17 @@ function isUpcomingFixture(fixture: FixtureListItem) {
 }
 
 function isResultFixture(fixture: FixtureListItem) {
-  return isCompletedFixture(fixture) || new Date(fixture.kickoffUtc).getTime() < Date.now();
+  return (
+    isCompletedFixture(fixture) ||
+    new Date(fixture.kickoffUtc).getTime() < Date.now()
+  );
 }
 
 export default function HomePage() {
   const [initial, setInitial] = useState<FixtureListItem[]>([]);
-  const [activeTab, setActiveTab] = useState<"LIVE" | "UPCOMING" | "RESULTS">("LIVE");
+  const [activeTab, setActiveTab] = useState<"LIVE" | "UPCOMING" | "RESULTS">(
+    "LIVE",
+  );
 
   useEffect(() => {
     fetch("/api/fixtures", { cache: "no-store" })
@@ -46,38 +55,33 @@ export default function HomePage() {
   }, []);
 
   const fixtures = useFixturesLive(initial);
-  const liveFixtures = fixtures
-    .filter(isLiveFixture)
-    .sort((a, b) => {
-      const leagueCompare = compareLeague(a, b);
-      if (leagueCompare !== 0) return leagueCompare;
-      return b.minute - a.minute;
-    });
-  const upcomingFixtures = fixtures
-    .filter(isUpcomingFixture)
-    .sort(
-      (a, b) => {
-        const leagueCompare = compareLeague(a, b);
-        if (leagueCompare !== 0) return leagueCompare;
-        return new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime();
-      },
-    );
-  const resultFixtures = fixtures
-    .filter(isResultFixture)
-    .sort((a, b) => {
-      const leagueCompare = compareLeague(a, b);
-      if (leagueCompare !== 0) return leagueCompare;
-      return new Date(b.kickoffUtc).getTime() - new Date(a.kickoffUtc).getTime();
-    });
+  const liveFixtures = fixtures.filter(isLiveFixture).sort((a, b) => {
+    const leagueCompare = compareLeague(a, b);
+    if (leagueCompare !== 0) return leagueCompare;
+    return b.minute - a.minute;
+  });
+  const upcomingFixtures = fixtures.filter(isUpcomingFixture).sort((a, b) => {
+    const leagueCompare = compareLeague(a, b);
+    if (leagueCompare !== 0) return leagueCompare;
+    return new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime();
+  });
+  const resultFixtures = fixtures.filter(isResultFixture).sort((a, b) => {
+    const leagueCompare = compareLeague(a, b);
+    if (leagueCompare !== 0) return leagueCompare;
+    return new Date(b.kickoffUtc).getTime() - new Date(a.kickoffUtc).getTime();
+  });
 
   const visibleLive = activeTab === "LIVE" ? liveFixtures : [];
   const visibleUpcoming = activeTab === "RESULTS" ? [] : upcomingFixtures;
   const visibleResults = activeTab === "UPCOMING" ? [] : resultFixtures;
-  const showFallback = activeTab === "LIVE" && visibleLive.length === 0;
 
   return (
     <main>
-      <NavBar liveCount={liveFixtures.length} active={activeTab} onChange={setActiveTab} />
+      <NavBar
+        liveCount={liveFixtures.length}
+        active={activeTab}
+        onChange={setActiveTab}
+      />
 
       <section className="section-block">
         <h1 className="section-title lime">Live Now</h1>
@@ -126,22 +130,6 @@ export default function HomePage() {
           )}
         </div>
       </section>
-
-      {showFallback && (
-        <section className="section-block">
-          <h2 className="section-title">Fallback Snapshot</h2>
-          <div className={styles.fallbackRow}>
-            <div className={styles.fallbackStat}>
-              <span className={styles.fallbackLabel}>Upcoming</span>
-              <span className={styles.fallbackValue}>{upcomingFixtures.length}</span>
-            </div>
-            <div className={styles.fallbackStat}>
-              <span className={styles.fallbackLabel}>Recent Results</span>
-              <span className={styles.fallbackValue}>{resultFixtures.length}</span>
-            </div>
-          </div>
-        </section>
-      )}
     </main>
   );
 }

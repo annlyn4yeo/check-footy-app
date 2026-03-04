@@ -14,7 +14,11 @@ function renderEventLabel(event: FixtureEvent) {
   return `${icon} ${minute} ${player ?? "Unknown"}`;
 }
 
-const TimelineItem = memo(function TimelineItem({ event }: { event: FixtureEvent }) {
+const TimelineItem = memo(function TimelineItem({
+  event,
+}: {
+  event: FixtureEvent;
+}) {
   const side = event.team === "AWAY" ? styles.right : styles.left;
   return (
     <div className={`${styles.row} ${side}`}>

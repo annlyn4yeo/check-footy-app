@@ -45,7 +45,9 @@ function resolveWsUrl(): string {
   return `${protocol}://${window.location.hostname}:4000`;
 }
 
-function resolveToastType(event: FixtureEvent): "goal" | "red" | "yellow" | "sub" | "other" {
+function resolveToastType(
+  event: FixtureEvent,
+): "goal" | "red" | "yellow" | "sub" | "other" {
   if (event.kind === "GOAL") return "goal";
   if (!event.eventType) return "other";
   if (event.eventType.includes("RED")) return "red";
@@ -87,7 +89,8 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
         setFixtures((prev) => {
           if (isCompletedStatus(parsed.status)) {
             return prev.filter(
-              (fixture) => fixture.providerFixtureId !== parsed.providerFixtureId,
+              (fixture) =>
+                fixture.providerFixtureId !== parsed.providerFixtureId,
             );
           }
 
@@ -99,7 +102,8 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
                   minute: parsed.minute,
                   scoreHome: parsed.scoreHome,
                   scoreAway: parsed.scoreAway,
-                  isLive: parsed.status === "LIVE" || parsed.status === "HALF_TIME",
+                  isLive:
+                    parsed.status === "LIVE" || parsed.status === "HALF_TIME",
                 }
               : fixture,
           );

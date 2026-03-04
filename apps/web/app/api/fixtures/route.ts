@@ -7,11 +7,7 @@ const ALLOWED_LEAGUE_IDS = new Set([
   2002, // Bundesliga
   2019, // Serie A
   2015, // Ligue 1
-  2003, // Eredivisie
-  2017, // Primeira Liga
   2145, // MLS
-  2013, // Brasileirao Serie A
-  2113, // Liga MX
 ]);
 const MAX_RESULTS_PER_LEAGUE = 20;
 
@@ -30,11 +26,14 @@ function isCompletedStatus(status: string) {
 
 export async function GET() {
   const nowMs = Date.now();
-  const fixtures = (await FixtureRepository.findPublicList()).filter((fixture) =>
-    ALLOWED_LEAGUE_IDS.has(fixture.league.providerId),
+  const fixtures = (await FixtureRepository.findPublicList()).filter(
+    (fixture) => ALLOWED_LEAGUE_IDS.has(fixture.league.providerId),
   );
 
-  const compareLeague = (a: (typeof fixtures)[number], b: (typeof fixtures)[number]) => {
+  const compareLeague = (
+    a: (typeof fixtures)[number],
+    b: (typeof fixtures)[number],
+  ) => {
     const leagueKeyA = `${a.league.country ?? ""}-${a.league.name}`;
     const leagueKeyB = `${b.league.country ?? ""}-${b.league.name}`;
     return leagueKeyA.localeCompare(leagueKeyB);
@@ -59,7 +58,9 @@ export async function GET() {
     .sort((a, b) => {
       const leagueCompare = compareLeague(a, b);
       if (leagueCompare !== 0) return leagueCompare;
-      return new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime();
+      return (
+        new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime()
+      );
     });
 
   const resultsByLeague = fixtures
@@ -71,10 +72,12 @@ export async function GET() {
     .sort((a, b) => {
       const leagueCompare = compareLeague(a, b);
       if (leagueCompare !== 0) return leagueCompare;
-      return new Date(b.kickoffUtc).getTime() - new Date(a.kickoffUtc).getTime();
+      return (
+        new Date(b.kickoffUtc).getTime() - new Date(a.kickoffUtc).getTime()
+      );
     });
 
-  const groupedResults = new Map<number, (typeof fixtures)>();
+  const groupedResults = new Map<number, typeof fixtures>();
   for (const fixture of resultsByLeague) {
     const leagueId = fixture.league.providerId;
     const bucket = groupedResults.get(leagueId) ?? [];

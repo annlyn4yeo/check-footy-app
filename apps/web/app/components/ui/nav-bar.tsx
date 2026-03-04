@@ -17,7 +17,10 @@ export function NavBar({
   onChange?: (tab: Tab) => void;
 }) {
   const [internalActive, setInternalActive] = useState<Tab>(active ?? "LIVE");
-  const selected = useMemo(() => active ?? internalActive, [active, internalActive]);
+  const selected = useMemo(
+    () => active ?? internalActive,
+    [active, internalActive],
+  );
 
   return (
     <header className={styles.nav}>
@@ -40,7 +43,9 @@ export function NavBar({
               }}
             >
               {tab}
-              {tab === "LIVE" && liveCount > 0 && <span className={styles.liveDot} />}
+              {tab === "LIVE" && liveCount > 0 && (
+                <span className={styles.liveDot} />
+              )}
             </button>
           );
         })}

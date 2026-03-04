@@ -17,7 +17,12 @@ function formatKickoff(kickoffUtc: string) {
 }
 
 function resolveStatus(fixture: FixtureListItem) {
-  if (fixture.status === "LIVE" || fixture.status === "HALF_TIME" || fixture.isLive) return "LIVE";
+  if (
+    fixture.status === "LIVE" ||
+    fixture.status === "HALF_TIME" ||
+    fixture.isLive
+  )
+    return "LIVE";
   if (
     fixture.status === "FULL_TIME" ||
     fixture.status === "FT" ||
@@ -43,7 +48,10 @@ export function FixtureCard({
   }, [fixture.scoreAway, fixture.scoreHome, status]);
 
   return (
-    <Link href={`/fixtures/${fixture.providerFixtureId}`} className={styles.link}>
+    <Link
+      href={`/fixtures/${fixture.providerFixtureId}`}
+      className={styles.link}
+    >
       <article
         className={`${styles.card} ${status === "LIVE" ? `${styles.live} ${styles.borderSweep}` : styles.nonLive} ${styles.entry}`}
         style={{ animationDelay: `${entryIndex * 60}ms` }}
@@ -57,7 +65,10 @@ export function FixtureCard({
           <div>{fixture.awayTeam.shortName ?? fixture.awayTeam.name}</div>
         </div>
 
-        <div key={scoreValue} className={`${styles.score} ${styles.scorePulse}`}>
+        <div
+          key={scoreValue}
+          className={`${styles.score} ${styles.scorePulse}`}
+        >
           {scoreValue}
         </div>
 
@@ -73,8 +84,12 @@ export function FixtureCard({
             <div className={`${styles.pill} ${styles.pillFt}`}>FT</div>
           ) : (
             <div className={styles.upcomingWrap}>
-              <div className={`${styles.pill} ${styles.pillUpcoming}`}>UPCOMING</div>
-              <span className={styles.kickoff}>{formatKickoff(fixture.kickoffUtc)}</span>
+              <div className={`${styles.pill} ${styles.pillUpcoming}`}>
+                UPCOMING
+              </div>
+              <span className={styles.kickoff}>
+                {formatKickoff(fixture.kickoffUtc)}
+              </span>
             </div>
           )}
         </div>

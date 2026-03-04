@@ -38,7 +38,9 @@ function resolveWsUrl(): string {
   return `${protocol}://${window.location.hostname}:4000`;
 }
 
-function resolveToastType(event: FixtureEvent): "goal" | "red" | "yellow" | "sub" | "other" {
+function resolveToastType(
+  event: FixtureEvent,
+): "goal" | "red" | "yellow" | "sub" | "other" {
   if (event.kind === "GOAL") return "goal";
   if (!event.eventType) return "other";
   if (event.eventType.includes("RED")) return "red";

@@ -44,11 +44,15 @@ export function LiveEventToastProvider({ children }: { children: ReactNode }) {
 
   const addToast = useCallback((toast: LiveToastInput) => {
     const id = ++idRef.current;
-    setToasts((prev) => [{ ...toast, id, exiting: false }, ...prev].slice(0, 6));
+    setToasts((prev) =>
+      [{ ...toast, id, exiting: false }, ...prev].slice(0, 6),
+    );
 
     window.setTimeout(() => {
       setToasts((prev) =>
-        prev.map((item) => (item.id === id ? { ...item, exiting: true } : item)),
+        prev.map((item) =>
+          item.id === id ? { ...item, exiting: true } : item,
+        ),
       );
     }, 4000);
 
@@ -82,7 +86,9 @@ export function LiveEventToastProvider({ children }: { children: ReactNode }) {
 export function useLiveEventToast() {
   const context = useContext(ToastContext);
   if (!context) {
-    throw new Error("useLiveEventToast must be used within LiveEventToastProvider");
+    throw new Error(
+      "useLiveEventToast must be used within LiveEventToastProvider",
+    );
   }
   return context;
 }
