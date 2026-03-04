@@ -3,9 +3,9 @@
 import { useMemo, useState } from "react";
 import styles from "./nav-bar.module.css";
 
-type Tab = "LIVE" | "TODAY" | "UPCOMING" | "RESULTS";
+type Tab = "LIVE" | "UPCOMING" | "RESULTS";
 
-const TABS: Tab[] = ["LIVE", "TODAY", "UPCOMING", "RESULTS"];
+const TABS: Tab[] = ["LIVE", "UPCOMING", "RESULTS"];
 
 export function NavBar({
   liveCount,

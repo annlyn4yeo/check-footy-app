@@ -54,6 +54,7 @@ function loadEnvFile(path: string) {
 export function loadWorkerEnv(): string[] {
   const cwd = process.cwd();
   const candidates = [
+    resolve(cwd, "../../.env"),
     resolve(cwd, ".env"),
     resolve(cwd, "apps/worker/.env"),
     resolve(cwd, "packages/db/prisma/.env"),

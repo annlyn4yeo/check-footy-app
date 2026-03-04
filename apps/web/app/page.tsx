@@ -7,9 +7,37 @@ import { useFixturesLive } from "@/app/hooks/useFixturesLive";
 import type { FixtureListItem } from "@/app/types/fixture";
 import styles from "./page.module.css";
 
+function compareLeague(a: FixtureListItem, b: FixtureListItem) {
+  const leagueKeyA = `${a.league.country ?? ""}-${a.league.name}`;
+  const leagueKeyB = `${b.league.country ?? ""}-${b.league.name}`;
+  return leagueKeyA.localeCompare(leagueKeyB);
+}
+
+function isLiveFixture(fixture: FixtureListItem) {
+  return fixture.status === "LIVE" || fixture.status === "HALF_TIME" || fixture.isLive;
+}
+
+function isCompletedFixture(fixture: FixtureListItem) {
+  return (
+    fixture.status === "FULL_TIME" ||
+    fixture.status === "FT" ||
+    fixture.status === "FINISHED" ||
+    fixture.status === "CANCELLED"
+  );
+}
+
+function isUpcomingFixture(fixture: FixtureListItem) {
+  if (isLiveFixture(fixture) || isCompletedFixture(fixture)) return false;
+  return new Date(fixture.kickoffUtc).getTime() >= Date.now();
+}
+
+function isResultFixture(fixture: FixtureListItem) {
+  return isCompletedFixture(fixture) || new Date(fixture.kickoffUtc).getTime() < Date.now();
+}
+
 export default function HomePage() {
   const [initial, setInitial] = useState<FixtureListItem[]>([]);
-  const [activeTab, setActiveTab] = useState<"LIVE" | "TODAY" | "UPCOMING" | "RESULTS">("LIVE");
+  const [activeTab, setActiveTab] = useState<"LIVE" | "UPCOMING" | "RESULTS">("LIVE");
 
   useEffect(() => {
     fetch("/api/fixtures", { cache: "no-store" })
@@ -18,26 +46,34 @@ export default function HomePage() {
   }, []);
 
   const fixtures = useFixturesLive(initial);
-  const liveFixtures = fixtures.filter(
-    (fixture) => fixture.status === "LIVE" || fixture.isLive,
-  );
-  const nonLiveFixtures = fixtures.filter(
-    (fixture) => !(fixture.status === "LIVE" || fixture.isLive),
-  );
+  const liveFixtures = fixtures
+    .filter(isLiveFixture)
+    .sort((a, b) => {
+      const leagueCompare = compareLeague(a, b);
+      if (leagueCompare !== 0) return leagueCompare;
+      return b.minute - a.minute;
+    });
+  const upcomingFixtures = fixtures
+    .filter(isUpcomingFixture)
+    .sort(
+      (a, b) => {
+        const leagueCompare = compareLeague(a, b);
+        if (leagueCompare !== 0) return leagueCompare;
+        return new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime();
+      },
+    );
+  const resultFixtures = fixtures
+    .filter(isResultFixture)
+    .sort((a, b) => {
+      const leagueCompare = compareLeague(a, b);
+      if (leagueCompare !== 0) return leagueCompare;
+      return new Date(b.kickoffUtc).getTime() - new Date(a.kickoffUtc).getTime();
+    });
 
-  const visibleLive = activeTab === "UPCOMING" || activeTab === "RESULTS" ? [] : liveFixtures;
-  const visibleToday =
-    activeTab === "LIVE"
-      ? nonLiveFixtures
-      : nonLiveFixtures.filter((fixture) => {
-          if (activeTab === "UPCOMING") {
-            return fixture.status !== "FT" && fixture.status !== "FINISHED";
-          }
-          if (activeTab === "RESULTS") {
-            return fixture.status === "FT" || fixture.status === "FINISHED";
-          }
-          return true;
-        });
+  const visibleLive = activeTab === "LIVE" ? liveFixtures : [];
+  const visibleUpcoming = activeTab === "RESULTS" ? [] : upcomingFixtures;
+  const visibleResults = activeTab === "UPCOMING" ? [] : resultFixtures;
+  const showFallback = activeTab === "LIVE" && visibleLive.length === 0;
 
   return (
     <main>
@@ -53,21 +89,59 @@ export default function HomePage() {
               entryIndex={index}
             />
           ))}
+          {visibleLive.length === 0 && (
+            <div className={styles.empty}>No live matches right now.</div>
+          )}
         </div>
       </section>
 
       <section className="section-block">
-        <h2 className="section-title">Today</h2>
+        <h2 className="section-title">Upcoming</h2>
         <div className={styles.grid}>
-          {visibleToday.map((fixture, index) => (
+          {visibleUpcoming.map((fixture, index) => (
             <FixtureCard
               key={fixture.providerFixtureId}
               fixture={fixture}
               entryIndex={visibleLive.length + index}
             />
           ))}
+          {visibleUpcoming.length === 0 && (
+            <div className={styles.empty}>No upcoming fixtures found.</div>
+          )}
         </div>
       </section>
+
+      <section className="section-block">
+        <h2 className="section-title">Results</h2>
+        <div className={styles.grid}>
+          {visibleResults.map((fixture, index) => (
+            <FixtureCard
+              key={fixture.providerFixtureId}
+              fixture={fixture}
+              entryIndex={visibleLive.length + visibleUpcoming.length + index}
+            />
+          ))}
+          {visibleResults.length === 0 && (
+            <div className={styles.empty}>No recent results found.</div>
+          )}
+        </div>
+      </section>
+
+      {showFallback && (
+        <section className="section-block">
+          <h2 className="section-title">Fallback Snapshot</h2>
+          <div className={styles.fallbackRow}>
+            <div className={styles.fallbackStat}>
+              <span className={styles.fallbackLabel}>Upcoming</span>
+              <span className={styles.fallbackValue}>{upcomingFixtures.length}</span>
+            </div>
+            <div className={styles.fallbackStat}>
+              <span className={styles.fallbackLabel}>Recent Results</span>
+              <span className={styles.fallbackValue}>{resultFixtures.length}</span>
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

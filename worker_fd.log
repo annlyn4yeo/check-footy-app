@@ -1,0 +1,2252 @@
+
+> @checkfooty/worker@ dev C:\dev\checkfooty\apps\worker
+> tsx watch src/index.ts
+
+[19:44:42.193] [32mINFO[39m (23832): [36mWorker booting[39m
+    [35mloadedEnvFiles[39m: [
+      "C:\dev\checkfooty\.env",
+      "C:\dev\checkfooty\apps\worker\.env",
+      "C:\dev\checkfooty\packages\db\prisma\.env"
+    ]
+    [35mfixtureProvider[39m: "football-data"
+[19:44:42.518] [32mINFO[39m (23832): [36mDatabase connection verified[39m
+[19:44:42.518] [32mINFO[39m (23832): [36mWorker heartbeat started[39m
+    [35mintervalMs[39m: 5000
+[19:44:47.526] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 100806656
+[19:44:49.470] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PL"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:44:49.776] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PL/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:44:50.081] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PL/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:44:50.383] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PL/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:44:50.687] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PD"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:44:50.990] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PD/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:44:51.294] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PD/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:44:51.595] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PD/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:44:51.896] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BL1"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:44:52.199] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BL1/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:44:52.501] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BL1/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:44:52.530] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 85110784
+[19:44:52.802] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BL1/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:44:53.103] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/SA"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:44:53.404] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/SA/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:44:53.704] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/SA/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:44:54.005] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/SA/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:44:54.309] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/FL1"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:44:54.609] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/FL1/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:44:54.911] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/FL1/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:44:55.212] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/FL1/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:44:55.519] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/DED"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:44:55.820] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/DED/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:44:56.119] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/DED/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:44:56.418] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/DED/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:44:56.719] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PPL"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:44:57.031] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PPL/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:44:57.332] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PPL/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:44:57.537] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 88641536
+[19:44:57.633] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PPL/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:44:57.943] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/MLS"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:44:58.244] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/MLS/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:44:58.546] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/MLS/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:44:58.848] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/MLS/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:44:59.152] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BSA"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:44:59.453] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BSA/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:44:59.754] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BSA/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:45:00.059] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BSA/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:45:00.361] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/LMX"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:45:00.664] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/LMX/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 404
+[19:45:00.967] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/LMX/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 404
+[19:45:01.268] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/LMX/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 404
+[19:45:01.610] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:45:01.610] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 13631
+[19:45:02.549] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 89337856
+[19:45:07.490] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 5
+[19:45:07.563] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 89776128
+[19:45:12.571] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 89874432
+[19:45:13.232] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 15
+[19:45:17.576] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 89894912
+[19:45:20.403] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:45:20.403] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1203
+[19:45:22.583] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 90333184
+[19:45:26.267] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:45:27.588] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 90431488
+[19:45:31.951] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:45:32.600] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91168768
+[19:45:37.609] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91328512
+[19:45:38.185] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:45:38.185] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 967
+[19:45:42.613] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91582464
+[19:45:43.367] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:45:47.617] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91709440
+[19:45:48.884] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:45:52.626] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91758592
+[19:45:54.912] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:45:54.912] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 912
+[19:45:57.639] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92061696
+[19:45:59.964] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:46:02.644] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91365376
+[19:46:05.527] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:46:07.649] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91410432
+[19:46:11.643] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:46:11.643] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 944
+[19:46:12.651] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91668480
+[19:46:16.702] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:46:17.656] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91041792
+[19:46:22.176] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:46:22.671] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91045888
+[19:46:27.680] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91111424
+[19:46:28.647] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:46:28.647] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 904
+[19:46:32.684] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91172864
+[19:46:33.733] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:46:37.688] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91119616
+[19:46:38.809] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:46:42.703] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91258880
+[19:46:45.336] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:46:45.336] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 969
+[19:46:47.714] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91328512
+[19:46:50.551] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:46:52.714] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91430912
+[19:46:56.473] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:46:57.725] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91484160
+[19:47:02.659] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:47:02.659] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 906
+[19:47:02.737] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91566080
+[19:47:07.738] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91635712
+[19:47:08.009] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:47:12.752] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91639808
+[19:47:13.741] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:47:17.758] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91693056
+[19:47:19.824] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:47:19.824] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 967
+[19:47:22.770] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91201536
+[19:47:25.267] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:47:27.783] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 90365952
+[19:47:31.037] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:47:32.797] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 90423296
+[19:47:37.555] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:47:37.555] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 944
+[19:47:37.812] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 90673152
+[19:47:42.820] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 90722304
+[19:47:43.540] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 33
+[19:47:47.820] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 90886144
+[19:47:48.932] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 33
+[19:47:52.824] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91070464
+[19:47:55.583] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:47:55.583] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1142
+[19:47:57.837] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91308032
+[19:48:01.216] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:48:02.849] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91484160
+[19:48:06.253] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:48:07.853] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91578368
+[19:48:12.433] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:48:12.433] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 943
+[19:48:12.861] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92184576
+[19:48:17.698] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:48:17.867] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92303360
+[19:48:22.879] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92372992
+[19:48:23.195] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:48:27.891] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92524544
+[19:48:29.563] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:48:29.563] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1239
+[19:48:32.897] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92200960
+[19:48:34.863] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:48:37.899] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92233728
+[19:48:40.053] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:48:42.902] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92438528
+[19:48:46.293] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:48:46.293] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1017
+[19:48:47.913] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92704768
+[19:48:51.903] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:48:52.914] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92880896
+[19:48:57.105] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:48:57.926] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92971008
+[19:49:02.940] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91996160
+[19:49:04.017] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:49:04.017] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 969
+[19:49:07.945] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91369472
+[19:49:09.859] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:49:12.955] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91553792
+[19:49:15.143] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:49:17.957] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91590656
+[19:49:21.808] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:49:21.808] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1067
+[19:49:22.963] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91701248
+[19:49:26.886] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:49:27.966] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91840512
+[19:49:32.366] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:49:32.972] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 91938816
+[19:49:37.983] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92041216
+[19:49:38.411] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:49:38.411] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 902
+[19:49:42.984] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92151808
+[19:49:43.677] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 27
+[19:49:47.989] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92463104
+[19:49:48.803] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:49:52.991] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92479488
+[19:49:55.539] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:49:55.539] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 970
+[19:49:57.991] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92389376
+[19:50:01.426] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:50:03.007] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92565504
+[19:50:07.055] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:50:08.022] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92655616
+[19:50:13.022] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92803072
+[19:50:13.281] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:50:13.281] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 980
+[19:50:18.036] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92905472
+[19:50:19.179] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 5
+[19:50:23.042] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92999680
+[19:50:25.066] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:50:28.056] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93171712
+[19:50:32.010] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:50:32.010] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1210
+[19:50:33.070] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93462528
+[19:50:37.147] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:50:38.076] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93528064
+[19:50:43.054] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:50:43.083] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92696576
+[19:50:48.084] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92737536
+[19:50:49.573] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:50:49.573] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1038
+[19:50:53.086] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92422144
+[19:50:55.225] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:50:58.091] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92590080
+[19:51:00.915] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:51:03.092] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92639232
+[19:51:07.582] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:51:07.582] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 902
+[19:51:08.099] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 92884992
+[19:51:13.110] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93044736
+[19:51:13.145] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:51:18.119] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93073408
+[19:51:18.559] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:51:23.120] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93224960
+[19:51:24.743] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:51:24.743] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 918
+[19:51:28.121] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93462528
+[19:51:29.826] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:51:33.123] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93540352
+[19:51:35.412] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 33
+[19:51:38.138] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93769728
+[19:51:41.932] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:51:41.932] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 907
+[19:51:43.148] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94449664
+[19:51:47.382] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:51:48.160] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94535680
+[19:51:53.162] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94617600
+[19:51:53.305] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:51:58.168] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94662656
+[19:52:00.104] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:52:00.104] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 908
+[19:52:03.178] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94068736
+[19:52:05.636] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:52:08.192] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94142464
+[19:52:10.681] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:52:13.199] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94076928
+[19:52:16.948] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:52:16.948] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 937
+[19:52:18.211] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93581312
+[19:52:22.027] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 5
+[19:52:23.224] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93880320
+[19:52:27.100] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:52:28.225] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93884416
+[19:52:33.232] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94138368
+[19:52:33.857] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:52:33.857] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 966
+[19:52:38.246] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94232576
+[19:52:39.285] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:52:43.256] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94400512
+[19:52:44.476] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:52:48.264] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94466048
+[19:52:50.951] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:52:50.951] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 944
+[19:52:53.280] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93704192
+[19:52:56.882] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:52:58.286] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93782016
+[19:53:02.071] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:53:03.292] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93843456
+[19:53:08.066] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:53:08.066] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 906
+[19:53:08.301] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93892608
+[19:53:13.311] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93995008
+[19:53:13.751] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 33
+[19:53:18.317] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94146560
+[19:53:19.208] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:53:23.320] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94146560
+[19:53:26.093] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:53:26.093] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 970
+[19:53:28.331] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94433280
+[19:53:31.712] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 5
+[19:53:33.341] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94539776
+[19:53:37.248] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:53:38.349] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93769728
+[19:53:43.357] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93954048
+[19:53:43.473] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:53:43.473] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 943
+[19:53:48.361] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93507584
+[19:53:49.129] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:53:53.374] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93589504
+[19:53:54.224] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:53:58.376] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93614080
+[19:54:00.862] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:54:00.862] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 940
+[19:54:03.387] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93868032
+[19:54:05.963] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:54:08.396] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94003200
+[19:54:11.019] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:54:13.399] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94109696
+[19:54:17.185] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:54:17.185] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 935
+[19:54:18.404] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94490624
+[19:54:22.904] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:54:23.415] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94556160
+[19:54:28.415] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94621696
+[19:54:28.900] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:54:33.430] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94687232
+[19:54:34.926] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:54:34.927] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 981
+[19:54:38.435] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94949376
+[19:54:40.712] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:54:43.437] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95055872
+[19:54:46.293] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 31
+[19:54:48.445] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95232000
+[19:54:52.958] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:54:52.958] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 942
+[19:54:53.460] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94396416
+[19:54:58.151] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:54:58.460] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94474240
+[19:55:03.268] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:55:03.463] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94597120
+[19:55:08.469] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 93859840
+[19:55:09.775] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:55:09.775] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 948
+[19:55:13.481] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94212096
+[19:55:14.811] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:55:18.485] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94457856
+[19:55:20.698] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:55:23.491] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94523392
+[19:55:27.411] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:55:27.411] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 941
+[19:55:28.499] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94978048
+[19:55:32.946] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 33
+[19:55:33.506] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95080448
+[19:55:37.963] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 5
+[19:55:38.519] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95244288
+[19:55:43.520] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95723520
+[19:55:44.714] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:55:44.714] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1257
+[19:55:48.523] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96014336
+[19:55:50.094] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:55:53.525] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96153600
+[19:55:55.296] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:55:58.532] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96243712
+[19:56:01.701] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:56:01.701] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 902
+[19:56:03.546] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97697792
+[19:56:07.626] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:56:08.546] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95899648
+[19:56:13.556] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95920128
+[19:56:13.559] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:56:18.556] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96006144
+[19:56:20.064] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:56:20.064] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 943
+[19:56:23.560] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95973376
+[19:56:25.873] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:56:28.576] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96174080
+[19:56:31.875] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:56:33.589] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95682560
+[19:56:38.525] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:56:38.525] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 950
+[19:56:38.604] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95846400
+[19:56:43.613] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95858688
+[19:56:44.379] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:56:48.614] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95989760
+[19:56:50.000] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:56:53.618] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95031296
+[19:56:56.403] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:56:56.403] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 971
+[19:56:58.622] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95346688
+[19:57:01.551] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:57:03.635] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95432704
+[19:57:07.213] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:57:08.642] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95518720
+[19:57:13.647] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95637504
+[19:57:14.170] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:57:14.170] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1022
+[19:57:18.653] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95760384
+[19:57:20.167] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:57:23.655] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95854592
+[19:57:25.560] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:57:28.657] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95854592
+[19:57:31.681] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:57:31.681] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 956
+[19:57:33.670] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95502336
+[19:57:37.668] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:57:38.678] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95567872
+[19:57:43.619] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:57:43.693] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95633408
+[19:57:48.701] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95731712
+[19:57:50.457] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:57:50.457] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 898
+[19:57:53.704] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95948800
+[19:57:56.142] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:57:58.719] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96051200
+[19:58:01.277] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:58:03.733] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96096256
+[19:58:07.239] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:58:07.239] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 894
+[19:58:08.745] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96333824
+[19:58:13.150] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:58:13.754] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96432128
+[19:58:18.621] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:58:18.758] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95977472
+[19:58:23.762] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96088064
+[19:58:24.961] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:58:24.961] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 932
+[19:58:28.766] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95744000
+[19:58:30.197] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:58:33.770] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95854592
+[19:58:35.334] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:58:38.785] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96026624
+[19:58:42.037] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:58:42.037] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 893
+[19:58:43.786] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96235520
+[19:58:47.674] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:58:48.791] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96337920
+[19:58:52.816] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:58:53.796] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96436224
+[19:58:58.804] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96534528
+[19:58:59.541] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:58:59.542] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 926
+[19:59:03.812] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97030144
+[19:59:04.748] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:59:08.817] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97193984
+[19:59:10.081] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[19:59:13.821] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97280000
+[19:59:16.317] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:59:16.317] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 937
+[19:59:18.828] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97816576
+[19:59:21.642] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:59:23.832] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98041856
+[19:59:26.899] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 6
+[19:59:28.833] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98148352
+[19:59:33.552] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:59:33.552] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 938
+[19:59:33.835] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98721792
+[19:59:38.843] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97742848
+[19:59:38.845] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:59:43.848] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97849344
+[19:59:44.178] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[19:59:48.863] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97882112
+[19:59:50.159] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[19:59:50.159] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 921
+[19:59:53.870] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97902592
+[19:59:55.540] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[19:59:58.872] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98111488
+[20:00:01.070] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:00:03.880] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98181120
+[20:00:07.376] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:00:07.377] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 943
+[20:00:08.882] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98426880
+[20:00:12.683] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:00:13.886] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97595392
+[20:00:17.814] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:00:18.901] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97615872
+[20:00:23.903] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96804864
+[20:00:24.042] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:00:24.042] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 904
+[20:00:28.909] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96944128
+[20:00:29.463] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:00:33.917] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96964608
+[20:00:35.461] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:00:38.921] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97103872
+[20:00:41.489] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:00:41.489] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 914
+[20:00:43.927] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97185792
+[20:00:46.525] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:00:48.940] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97189888
+[20:00:51.752] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:00:53.950] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97304576
+[20:00:58.461] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:00:58.461] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1205
+[20:00:58.952] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96866304
+[20:01:03.636] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:01:03.957] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97017856
+[20:01:08.915] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:01:08.960] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97017856
+[20:01:13.974] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97099776
+[20:01:15.194] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:01:15.194] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 969
+[20:01:18.978] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97337344
+[20:01:20.891] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:01:23.981] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97460224
+[20:01:26.517] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:01:28.991] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97607680
+[20:01:33.146] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:01:33.146] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 921
+[20:01:34.006] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97787904
+[20:01:38.263] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:01:39.006] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97882112
+[20:01:43.955] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:01:44.016] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97988608
+[20:01:49.023] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97017856
+[20:01:50.916] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:01:50.916] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1034
+[20:01:54.027] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97275904
+[20:01:56.919] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:01:59.039] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97415168
+[20:02:01.993] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:02:04.046] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97546240
+[20:02:08.138] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:02:08.138] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 901
+[20:02:09.052] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96997376
+[20:02:14.046] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:02:14.060] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97071104
+[20:02:19.074] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97239040
+[20:02:19.587] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:02:24.079] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97263616
+[20:02:26.087] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:02:26.087] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 893
+[20:02:29.090] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97484800
+[20:02:32.051] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:02:34.090] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97640448
+[20:02:37.823] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:02:39.097] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98242560
+[20:02:44.109] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98484224
+[20:02:44.403] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:02:44.403] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1042
+[20:02:49.122] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98648064
+[20:02:50.293] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:02:54.136] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98738176
+[20:02:55.499] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 5
+[20:02:59.151] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 98779136
+[20:03:02.265] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:03:02.265] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1170
+[20:03:04.166] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 99467264
+[20:03:07.392] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:03:09.177] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 99540992
+[20:03:13.295] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:03:14.181] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 99717120
+[20:03:19.191] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 99782656
+[20:03:19.414] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:03:19.414] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 906
+[20:03:24.198] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 99926016
+[20:03:25.421] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:03:29.211] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95690752
+[20:03:30.769] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:03:34.214] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96182272
+[20:03:37.930] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:03:37.930] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1199
+[20:03:39.228] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95166464
+[20:03:43.367] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:03:44.244] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95268864
+[20:03:49.157] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:03:49.250] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95281152
+[20:03:54.259] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95412224
+[20:03:55.447] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:03:55.447] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 906
+[20:03:59.272] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95465472
+[20:04:00.843] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:04:04.280] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95580160
+[20:04:06.780] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:04:09.289] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95657984
+[20:04:13.510] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:04:13.510] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 897
+[20:04:14.300] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95825920
+[20:04:18.678] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:04:19.315] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95825920
+[20:04:23.975] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:04:24.318] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95891456
+[20:04:29.321] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95903744
+[20:04:30.131] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:04:30.132] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 936
+[20:04:34.335] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95256576
+[20:04:36.122] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:04:39.335] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95277056
+[20:04:41.948] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:04:44.338] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95375360
+[20:04:48.781] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:04:48.781] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1111
+[20:04:49.343] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94904320
+[20:04:54.213] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 20
+[20:04:54.348] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94978048
+[20:04:59.358] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95297536
+[20:05:00.079] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:05:04.370] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95379456
+[20:05:06.192] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:05:06.192] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 902
+[20:05:09.376] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94711808
+[20:05:11.848] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:05:14.387] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94826496
+[20:05:17.668] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:05:19.402] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94994432
+[20:05:24.012] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:05:24.012] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 920
+[20:05:24.401] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95133696
+[20:05:29.410] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94539776
+[20:05:29.523] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:05:34.412] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94568448
+[20:05:35.225] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:05:39.413] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94687232
+[20:05:41.435] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:05:41.435] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 932
+[20:05:44.418] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94916608
+[20:05:46.844] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:05:49.421] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95068160
+[20:05:52.593] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:05:54.428] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95141888
+[20:05:58.935] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:05:58.935] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 977
+[20:05:59.440] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95408128
+[20:06:04.444] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95416320
+[20:06:04.492] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:06:09.443] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95461376
+[20:06:10.487] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:06:14.449] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95666176
+[20:06:16.571] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:06:16.571] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 947
+[20:06:19.457] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95846400
+[20:06:22.500] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:06:24.466] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95371264
+[20:06:27.645] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:06:29.466] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95440896
+[20:06:33.897] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:06:33.897] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1025
+[20:06:34.474] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95707136
+[20:06:38.942] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:06:39.481] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 94998528
+[20:06:44.213] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:06:44.493] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95035392
+[20:06:49.498] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95076352
+[20:06:51.013] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:06:51.013] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 968
+[20:06:54.511] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95457280
+[20:06:56.795] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:06:59.511] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95551488
+[20:07:02.149] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:07:04.521] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95649792
+[20:07:08.339] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:07:08.339] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 938
+[20:07:09.536] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95203328
+[20:07:14.175] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:07:14.547] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95313920
+[20:07:19.411] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:07:19.548] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95379456
+[20:07:24.554] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95473664
+[20:07:25.956] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:07:25.956] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 981
+[20:07:29.554] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96116736
+[20:07:31.963] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:07:34.567] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96964608
+[20:07:37.393] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:07:39.575] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97087488
+[20:07:44.168] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:07:44.168] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 960
+[20:07:44.575] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97468416
+[20:07:49.285] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:07:49.580] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97476608
+[20:07:54.582] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97542144
+[20:07:54.600] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:07:59.590] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97546240
+[20:08:00.766] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:08:00.766] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 975
+[20:08:04.601] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97808384
+[20:08:06.230] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:08:09.606] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97132544
+[20:08:12.131] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:08:14.615] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97193984
+[20:08:18.777] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:08:18.777] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 974
+[20:08:19.615] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96636928
+[20:08:24.078] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:08:24.619] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96722944
+[20:08:29.226] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:08:29.631] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96722944
+[20:08:34.635] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96731136
+[20:08:35.467] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:08:35.467] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 959
+[20:08:39.641] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96473088
+[20:08:40.487] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 5
+[20:08:44.654] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96555008
+[20:08:46.110] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:08:49.662] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96645120
+[20:08:52.752] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:08:52.752] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1202
+[20:08:54.672] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97378304
+[20:08:58.172] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:08:59.674] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96444416
+[20:09:03.853] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:09:04.677] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96493568
+[20:09:09.686] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96600064
+[20:09:10.187] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:09:10.187] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 918
+[20:09:14.695] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95748096
+[20:09:15.821] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:09:19.704] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95096832
+[20:09:21.593] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:09:24.718] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95178752
+[20:09:27.991] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:09:27.991] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 966
+[20:09:29.733] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95350784
+[20:09:33.712] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:09:34.740] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95526912
+[20:09:38.932] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:09:39.743] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95543296
+[20:09:44.746] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95744000
+[20:09:45.395] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:09:45.395] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 929
+[20:09:49.750] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95797248
+[20:09:51.118] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:09:54.756] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95924224
+[20:09:56.572] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 19
+[20:09:59.763] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95121408
+[20:10:02.504] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:10:02.504] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 900
+[20:10:04.774] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95809536
+[20:10:08.288] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:10:09.786] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95866880
+[20:10:13.625] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:10:14.794] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95326208
+[20:10:19.806] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95404032
+[20:10:20.392] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:10:20.392] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 946
+[20:10:24.811] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95608832
+[20:10:26.011] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:10:29.825] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95776768
+[20:10:31.519] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:10:34.829] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95244288
+[20:10:37.801] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:10:37.801] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 905
+[20:10:39.834] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95518720
+[20:10:43.436] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:10:44.837] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 95649792
+[20:10:48.662] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:10:49.843] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96415744
+[20:10:54.790] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:10:54.791] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 905
+[20:10:54.852] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96710656
+[20:10:59.865] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96755712
+[20:11:00.694] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:11:04.872] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96841728
+[20:11:06.472] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:11:09.887] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96989184
+[20:11:12.971] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:11:12.971] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 909
+[20:11:14.903] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97402880
+[20:11:18.762] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:11:19.903] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97501184
+[20:11:24.141] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:11:24.905] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96747520
+[20:11:29.920] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96894976
+[20:11:30.107] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:11:30.107] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 937
+[20:11:34.931] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97054720
+[20:11:35.185] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:11:39.932] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97202176
+[20:11:41.055] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:11:44.943] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97218560
+[20:11:47.558] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:11:47.558] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 978
+[20:11:49.944] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97218560
+[20:11:52.633] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:11:54.959] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97271808
+[20:11:58.189] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:11:59.972] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97419264
+[20:12:04.816] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:12:04.816] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 976
+[20:12:04.976] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97587200
+[20:12:09.988] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97718272
+[20:12:10.039] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:12:15.003] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97869824
+[20:12:15.085] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:12:20.014] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97869824
+[20:12:21.647] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:12:21.647] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 914
+[20:12:25.025] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97394688
+[20:12:27.229] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:12:30.032] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97476608
+[20:12:32.823] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:12:35.045] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97550336
+[20:12:39.698] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:12:39.698] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 902
+[20:12:40.049] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97558528
+[20:12:45.052] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97402880
+[20:12:45.148] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:12:50.060] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97542144
+[20:12:50.715] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:12:55.074] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97603584
+[20:12:57.216] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:12:57.216] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1034
+[20:13:00.074] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96964608
+[20:13:02.729] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:13:05.086] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97030144
+[20:13:08.400] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:13:10.093] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97157120
+[20:13:14.535] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:13:14.535] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 897
+[20:13:15.103] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97185792
+[20:13:20.106] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97329152
+[20:13:20.140] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:13:25.106] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97329152
+[20:13:25.156] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:13:30.118] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97357824
+[20:13:31.359] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:13:31.359] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 1069
+[20:13:35.131] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96800768
+[20:13:36.994] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 2
+[20:13:40.142] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96980992
+[20:13:42.915] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:13:45.146] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 96985088
+[20:13:49.286] [33mWARN[39m (23832): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 404
+[20:13:49.286] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 904
+[20:13:50.159] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97259520
+[20:13:55.078] [32mINFO[39m (23832): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:13:55.168] [32mINFO[39m (23832): [36mWorker alive[39m
+    [35mmemory[39m: 97320960
+8:13:57 pm [tsx] change in ./src\providers\football-data.provider.ts Restarting...
+c[20:13:58.222] [32mINFO[39m (24772): [36mWorker booting[39m
+    [35mloadedEnvFiles[39m: [
+      "C:\dev\checkfooty\.env",
+      "C:\dev\checkfooty\apps\worker\.env",
+      "C:\dev\checkfooty\packages\db\prisma\.env"
+    ]
+    [35mfixtureProvider[39m: "football-data"
+[20:13:58.495] [32mINFO[39m (24772): [36mDatabase connection verified[39m
+[20:13:58.495] [32mINFO[39m (24772): [36mWorker heartbeat started[39m
+    [35mintervalMs[39m: 5000
+[20:14:03.497] [32mINFO[39m (24772): [36mWorker alive[39m
+    [35mmemory[39m: 102977536
+[20:14:08.363] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BL1/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2025,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 429
+[20:14:08.509] [32mINFO[39m (24772): [36mWorker alive[39m
+    [35mmemory[39m: 87465984
+[20:14:08.984] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/SA"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 429
+[20:14:09.152] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/SA/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 429
+[20:14:09.310] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/SA/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 429
+[20:14:09.511] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/SA/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 429
+[20:14:09.678] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/FL1"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 429
+[20:14:09.879] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/FL1/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 429
+[20:14:10.038] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/FL1/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 429
+[20:14:10.240] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/FL1/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 429
+[20:14:10.398] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/DED"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 429
+[20:14:10.599] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/DED/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 429
+[20:14:10.755] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/DED/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 429
+[20:14:10.929] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/DED/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 429
+[20:14:11.090] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PPL"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 429
+[20:14:11.297] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PPL/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 429
+[20:14:11.456] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PPL/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 429
+[20:14:11.656] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/PPL/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 429
+[20:14:11.814] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/MLS"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 429
+[20:14:11.987] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/MLS/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 429
+[20:14:12.145] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/MLS/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 429
+[20:14:12.357] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/MLS/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 429
+[20:14:12.514] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BSA"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 429
+[20:14:12.686] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BSA/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 429
+[20:14:12.846] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BSA/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 429
+[20:14:13.015] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/BSA/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 429
+[20:14:13.180] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/LMX"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 429
+[20:14:13.349] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/LMX/matches"
+    [35mparams[39m: {
+      "status": "LIVE"
+    }
+    [35mstatusCode[39m: 429
+[20:14:13.505] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/LMX/matches"
+    [35mparams[39m: {
+      "status": "SCHEDULED",
+      "season": 2026,
+      "dateFrom": "2026-03-04",
+      "dateTo": "2026-03-18"
+    }
+    [35mstatusCode[39m: 429
+[20:14:13.513] [32mINFO[39m (24772): [36mWorker alive[39m
+    [35mmemory[39m: 90464256
+[20:14:13.672] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/competitions/LMX/matches"
+    [35mparams[39m: {
+      "status": "FINISHED",
+      "season": 2026,
+      "dateFrom": "2026-02-02",
+      "dateTo": "2026-03-04"
+    }
+    [35mstatusCode[39m: 429
+[20:14:14.601] [32mINFO[39m (24772): [36mFixture discovery sync complete[39m
+    [35mdiscovered[39m: 143
+    [35mupserted[39m: 143
+[20:14:14.776] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 429
+[20:14:14.776] [32mINFO[39m (24772): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 10794
+[20:14:18.519] [32mINFO[39m (24772): [36mWorker alive[39m
+    [35mmemory[39m: 94158848
+[20:14:20.540] [32mINFO[39m (24772): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:14:23.520] [32mINFO[39m (24772): [36mWorker alive[39m
+    [35mmemory[39m: 94310400
+[20:14:25.696] [32mINFO[39m (24772): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:14:28.532] [32mINFO[39m (24772): [36mWorker alive[39m
+    [35mmemory[39m: 94380032
+[20:14:31.364] [33mWARN[39m (24772): [36mfootball-data request failed[39m
+    [35mpath[39m: "/matches/1001"
+    [35mparams[39m: {}
+    [35mstatusCode[39m: 429
+[20:14:31.364] [32mINFO[39m (24772): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 459
+[20:14:33.541] [32mINFO[39m (24772): [36mWorker alive[39m
+    [35mmemory[39m: 94494720
+[20:14:36.997] [32mINFO[39m (24772): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 4
+[20:14:38.554] [32mINFO[39m (24772): [36mWorker alive[39m
+    [35mmemory[39m: 94617600
+[20:14:42.990] [32mINFO[39m (24772): [36mIngestion cycle completed[39m
+    [35mdurationMs[39m: 3
+[20:14:43.561] [32mINFO[39m (24772): [36mWorker alive[39m
+    [35mmemory[39m: 94617600
+C:\dev\checkfooty\apps\worker:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @checkfooty/worker@ dev: `tsx watch src/index.ts`
+Exit status 4294967295

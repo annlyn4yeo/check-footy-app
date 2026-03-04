@@ -24,6 +24,15 @@ type FixtureEvent = {
   playerName?: string | null;
 };
 
+function isCompletedStatus(status: string) {
+  return (
+    status === "FULL_TIME" ||
+    status === "FT" ||
+    status === "FINISHED" ||
+    status === "CANCELLED"
+  );
+}
+
 function resolveWsUrl(): string {
   const configured = process.env.NEXT_PUBLIC_REALTIME_WS_URL;
   if (configured) return configured;
@@ -75,8 +84,14 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
       const parsed = JSON.parse(event.data) as FixtureUpdate | FixtureEvent;
 
       if (parsed.type === "fixture.updated") {
-        setFixtures((prev) =>
-          prev.map((fixture) =>
+        setFixtures((prev) => {
+          if (isCompletedStatus(parsed.status)) {
+            return prev.filter(
+              (fixture) => fixture.providerFixtureId !== parsed.providerFixtureId,
+            );
+          }
+
+          return prev.map((fixture) =>
             fixture.providerFixtureId === parsed.providerFixtureId
               ? {
                   ...fixture,
@@ -84,11 +99,11 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
                   minute: parsed.minute,
                   scoreHome: parsed.scoreHome,
                   scoreAway: parsed.scoreAway,
-                  isLive: parsed.status === "LIVE",
+                  isLive: parsed.status === "LIVE" || parsed.status === "HALF_TIME",
                 }
               : fixture,
-          ),
-        );
+          );
+        });
       }
 
       if (parsed.type === "fixture.event") {

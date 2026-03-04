@@ -1,17 +1,16 @@
 import { SimulatedProvider } from "./simulated.provider.js";
-import { ApiFootballProvider } from "./api-football.provider.js";
+import { FootballDataProvider } from "./football-data.provider.js";
 import type { FixtureProvider } from "./provider.interface.js";
 
 export function createProvider(): FixtureProvider {
-  const providerType = (process.env.FIXTURE_PROVIDER ?? "api").toLowerCase();
+  const providerType = (process.env.FIXTURE_PROVIDER ?? "football-data").toLowerCase();
 
   switch (providerType) {
     case "simulated":
       return new SimulatedProvider();
 
-    case "api":
-    case "api-football":
-      return new ApiFootballProvider();
+    case "football-data":
+      return new FootballDataProvider();
 
     default:
       throw new Error(`Unsupported FIXTURE_PROVIDER: ${providerType}`);
