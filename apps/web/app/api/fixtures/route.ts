@@ -65,9 +65,7 @@ export async function GET() {
 
   const resultsByLeague = fixtures
     .filter(
-      (fixture) =>
-        isCompletedStatus(fixture.status) ||
-        new Date(fixture.kickoffUtc).getTime() < nowMs,
+      (fixture) => isCompletedStatus(fixture.status),
     )
     .sort((a, b) => {
       const leagueCompare = compareLeague(a, b);

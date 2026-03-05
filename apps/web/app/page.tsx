@@ -36,10 +36,7 @@ function isUpcomingFixture(fixture: FixtureListItem) {
 }
 
 function isResultFixture(fixture: FixtureListItem) {
-  return (
-    isCompletedFixture(fixture) ||
-    new Date(fixture.kickoffUtc).getTime() < Date.now()
-  );
+  return isCompletedFixture(fixture);
 }
 
 export default function HomePage() {
