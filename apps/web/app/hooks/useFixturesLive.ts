@@ -52,6 +52,7 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reconnectAttempts = useRef(0);
+  const subscribedIdsRef = useRef<Set<number>>(new Set());
   const fixturesRef = useRef<FixtureListItem[]>(initialFixtures);
   const { addToast } = useLiveEventToast();
 
@@ -81,13 +82,16 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
     }
 
     function subscribeAll(socket: WebSocket) {
+      if (socket.readyState !== WebSocket.OPEN) return;
       for (const fixture of fixturesRef.current) {
+        if (subscribedIdsRef.current.has(fixture.providerFixtureId)) continue;
         socket.send(
           JSON.stringify({
             type: "subscribe",
             fixtureId: fixture.providerFixtureId,
           }),
         );
+        subscribedIdsRef.current.add(fixture.providerFixtureId);
       }
     }
 
@@ -98,13 +102,14 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
     }
 
     function connect() {
-      if (cancelled || fixturesRef.current.length === 0) return;
+      if (cancelled) return;
 
       const socket = new WebSocket(resolveWsUrl());
       socketRef.current = socket;
 
       socket.onopen = () => {
         reconnectAttempts.current = 0;
+        subscribedIdsRef.current = new Set();
         subscribeAll(socket);
         void refetchFixtures();
       };
@@ -118,21 +123,28 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
         }
 
         if (parsed.type === "fixture.updated") {
+          let found = false;
           setFixtures((prev) =>
-            prev.map((fixture) =>
-              fixture.providerFixtureId === parsed.providerFixtureId
-                ? {
-                    ...fixture,
-                    status: parsed.status,
-                    minute: parsed.minute,
-                    scoreHome: parsed.scoreHome,
-                    scoreAway: parsed.scoreAway,
-                    isLive:
-                      parsed.status === "LIVE" || parsed.status === "HALF_TIME",
-                  }
-                : fixture,
-            ),
+            prev.map((fixture) => {
+              if (fixture.providerFixtureId !== parsed.providerFixtureId) {
+                return fixture;
+              }
+
+              found = true;
+              return {
+                ...fixture,
+                status: parsed.status,
+                minute: parsed.minute,
+                scoreHome: parsed.scoreHome,
+                scoreAway: parsed.scoreAway,
+                isLive:
+                  parsed.status === "LIVE" || parsed.status === "HALF_TIME",
+              };
+            }),
           );
+          if (!found) {
+            void refetchFixtures();
+          }
         }
 
         if (parsed.type === "fixture.event") {
@@ -176,12 +188,14 @@ export function useFixturesLive(initialFixtures: FixtureListItem[]) {
   useEffect(() => {
     if (socketRef.current?.readyState !== WebSocket.OPEN) return;
     for (const fixture of initialFixtures) {
+      if (subscribedIdsRef.current.has(fixture.providerFixtureId)) continue;
       socketRef.current.send(
         JSON.stringify({
           type: "subscribe",
           fixtureId: fixture.providerFixtureId,
         }),
       );
+      subscribedIdsRef.current.add(fixture.providerFixtureId);
     }
   }, [initialFixtures]);
 

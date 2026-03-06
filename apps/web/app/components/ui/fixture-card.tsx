@@ -120,14 +120,8 @@ export function FixtureCard({
             </div>
           )}
           <div className="[font-family:var(--font-display)] text-[clamp(24px,2.3vw,34px)] font-black uppercase leading-[0.88]">
-            <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[var(--white)]/50" />
-              <span>{homeName}</span>
-            </div>
-            <div className="mt-1 flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[var(--white)]/35" />
-              <span>{awayName}</span>
-            </div>
+            <div>{homeName}</div>
+            <div className="mt-1">{awayName}</div>
           </div>
         </div>
 
@@ -140,12 +134,7 @@ export function FixtureCard({
 
         <div className="mt-3 flex flex-col items-start gap-2 md:mt-0 md:items-end">
           {status === "LIVE" ? (
-            <>
-              <LiveIndicator />
-              <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 [font-family:var(--font-body)] text-[10px] font-semibold uppercase tracking-[0.1em] ${styles.tag}`}>
-                LIVE <span className="h-[5px] w-[5px] animate-pulse rounded-full bg-black" />
-              </div>
-            </>
+            <LiveIndicator />
           ) : status === "FT" ? (
             <div className={`inline-flex min-h-[22px] items-center rounded-full border px-3 py-1 [font-family:var(--font-body)] text-[10px] font-semibold uppercase tracking-[0.1em] ${styles.tag}`}>
               FT

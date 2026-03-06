@@ -10,6 +10,7 @@ const ALLOWED_LEAGUE_IDS = new Set([
   2145, // MLS
 ]);
 const MAX_RESULTS_PER_LEAGUE = 20;
+const LIVE_INFERENCE_WINDOW_MS = 3 * 60 * 60 * 1000;
 
 function isLiveStatus(status: string) {
   return status === "LIVE" || status === "HALF_TIME";
@@ -24,11 +25,33 @@ function isCompletedStatus(status: string) {
   );
 }
 
+function isLikelyLiveByKickoff(
+  kickoffUtc: string | Date,
+  nowMs: number,
+  status: string,
+) {
+  if (isCompletedStatus(status) || isLiveStatus(status)) return false;
+  const kickoffMs = new Date(kickoffUtc).getTime();
+  if (!Number.isFinite(kickoffMs)) return false;
+  return kickoffMs <= nowMs && nowMs - kickoffMs <= LIVE_INFERENCE_WINDOW_MS;
+}
+
 export async function GET() {
   const nowMs = Date.now();
-  const fixtures = (await FixtureRepository.findPublicList()).filter(
-    (fixture) => ALLOWED_LEAGUE_IDS.has(fixture.league.providerId),
-  );
+  const fixtures = (await FixtureRepository.findPublicList())
+    .filter((fixture) => ALLOWED_LEAGUE_IDS.has(fixture.league.providerId))
+    .map((fixture) => {
+      const inferredLive = isLikelyLiveByKickoff(
+        fixture.kickoffUtc,
+        nowMs,
+        fixture.status,
+      );
+      if (!inferredLive) return fixture;
+      return {
+        ...fixture,
+        isLive: true,
+      };
+    });
 
   const compareLeague = (
     a: (typeof fixtures)[number],
@@ -52,8 +75,7 @@ export async function GET() {
       (fixture) =>
         !isCompletedStatus(fixture.status) &&
         !isLiveStatus(fixture.status) &&
-        !fixture.isLive &&
-        new Date(fixture.kickoffUtc).getTime() >= nowMs,
+        !fixture.isLive,
     )
     .sort((a, b) => {
       const leagueCompare = compareLeague(a, b);
