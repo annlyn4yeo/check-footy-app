@@ -5,12 +5,15 @@ import { NavBar } from "@/app/components/ui/nav-bar";
 import { FixtureCard } from "@/app/components/ui/fixture-card";
 import { useFixturesLive } from "@/app/hooks/useFixturesLive";
 import type { FixtureListItem } from "@/app/types/fixture";
-import styles from "./page.module.css";
 
 function compareLeague(a: FixtureListItem, b: FixtureListItem) {
   const leagueKeyA = `${a.league.country ?? ""}-${a.league.name}`;
   const leagueKeyB = `${b.league.country ?? ""}-${b.league.name}`;
   return leagueKeyA.localeCompare(leagueKeyB);
+}
+
+function sortByKickoff(a: FixtureListItem, b: FixtureListItem) {
+  return new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime();
 }
 
 function isLiveFixture(fixture: FixtureListItem) {
@@ -39,6 +42,77 @@ function isResultFixture(fixture: FixtureListItem) {
   return isCompletedFixture(fixture);
 }
 
+type LeagueMatchdayGroup = {
+  leagueId: number;
+  leagueName: string;
+  country: string | null;
+  matchdayKey: string;
+  fixtures: FixtureListItem[];
+};
+
+function toMatchdayKey(kickoffUtc: string) {
+  return kickoffUtc.slice(0, 10);
+}
+
+function formatMatchdayLabel(matchdayKey: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  }).format(new Date(`${matchdayKey}T00:00:00Z`));
+}
+
+function buildLeagueMatchdayGroups(
+  fixtures: FixtureListItem[],
+  direction: "next" | "past",
+): LeagueMatchdayGroup[] {
+  const byLeague = new Map<
+    number,
+    {
+      leagueName: string;
+      country: string | null;
+      days: Map<string, FixtureListItem[]>;
+    }
+  >();
+
+  for (const fixture of fixtures) {
+    const leagueId = fixture.league.providerId;
+    const dayKey = toMatchdayKey(fixture.kickoffUtc);
+    const leagueEntry = byLeague.get(leagueId) ?? {
+      leagueName: fixture.league.name,
+      country: fixture.league.country,
+      days: new Map<string, FixtureListItem[]>(),
+    };
+
+    const dayFixtures = leagueEntry.days.get(dayKey) ?? [];
+    dayFixtures.push(fixture);
+    leagueEntry.days.set(dayKey, dayFixtures);
+    byLeague.set(leagueId, leagueEntry);
+  }
+
+  const groups: LeagueMatchdayGroup[] = [];
+  for (const [leagueId, league] of byLeague.entries()) {
+    const dayKeys = [...league.days.keys()].sort();
+    const targetDayKey =
+      direction === "next" ? dayKeys[0] : dayKeys[dayKeys.length - 1];
+    if (!targetDayKey) continue;
+
+    groups.push({
+      leagueId,
+      leagueName: league.leagueName,
+      country: league.country,
+      matchdayKey: targetDayKey,
+      fixtures: (league.days.get(targetDayKey) ?? []).sort(sortByKickoff),
+    });
+  }
+
+  return groups.sort((a, b) => {
+    const keyA = `${a.country ?? ""}-${a.leagueName}`;
+    const keyB = `${b.country ?? ""}-${b.leagueName}`;
+    return keyA.localeCompare(keyB);
+  });
+}
+
 export default function HomePage() {
   const [initial, setInitial] = useState<FixtureListItem[]>([]);
   const [activeTab, setActiveTab] = useState<"LIVE" | "UPCOMING" | "RESULTS">(
@@ -57,20 +131,15 @@ export default function HomePage() {
     if (leagueCompare !== 0) return leagueCompare;
     return b.minute - a.minute;
   });
-  const upcomingFixtures = fixtures.filter(isUpcomingFixture).sort((a, b) => {
-    const leagueCompare = compareLeague(a, b);
-    if (leagueCompare !== 0) return leagueCompare;
-    return new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime();
-  });
-  const resultFixtures = fixtures.filter(isResultFixture).sort((a, b) => {
-    const leagueCompare = compareLeague(a, b);
-    if (leagueCompare !== 0) return leagueCompare;
-    return new Date(b.kickoffUtc).getTime() - new Date(a.kickoffUtc).getTime();
-  });
+  const upcomingFixtures = fixtures.filter(isUpcomingFixture);
+  const resultFixtures = fixtures.filter(isResultFixture);
+
+  const upcomingGroups = buildLeagueMatchdayGroups(upcomingFixtures, "next");
+  const resultGroups = buildLeagueMatchdayGroups(resultFixtures, "past");
 
   const visibleLive = activeTab === "LIVE" ? liveFixtures : [];
-  const visibleUpcoming = activeTab === "RESULTS" ? [] : upcomingFixtures;
-  const visibleResults = activeTab === "UPCOMING" ? [] : resultFixtures;
+  const visibleUpcoming = activeTab === "RESULTS" ? [] : upcomingGroups;
+  const visibleResults = activeTab === "UPCOMING" ? [] : resultGroups;
 
   return (
     <main>
@@ -82,48 +151,105 @@ export default function HomePage() {
 
       <section className="section-block">
         <h1 className="section-title lime">Live Now</h1>
-        <div className={styles.grid}>
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
           {visibleLive.map((fixture, index) => (
             <FixtureCard
               key={fixture.providerFixtureId}
               fixture={fixture}
               entryIndex={index}
+              mode="LIVE"
             />
           ))}
           {visibleLive.length === 0 && (
-            <div className={styles.empty}>No live matches right now.</div>
+            <div className="rounded-xl border border-dashed border-[var(--surface-2)] p-4 [font-family:var(--font-body)] text-sm text-[var(--muted)]">
+              No live matches right now.
+            </div>
           )}
         </div>
       </section>
 
       <section className="section-block">
         <h2 className="section-title">Upcoming</h2>
-        <div className={styles.grid}>
-          {visibleUpcoming.map((fixture, index) => (
-            <FixtureCard
-              key={fixture.providerFixtureId}
-              fixture={fixture}
-              entryIndex={visibleLive.length + index}
-            />
+        <div className="grid grid-cols-1 gap-5">
+          {visibleUpcoming.map((group) => (
+            <section
+              key={`${group.leagueId}-${group.matchdayKey}`}
+              className="rounded-3xl border border-[var(--surface-2)] bg-[radial-gradient(circle_at_top_left,rgba(200,255,0,0.14),transparent_40%),linear-gradient(160deg,rgba(255,255,255,0.06),transparent_32%),var(--surface)] p-4 md:p-5"
+            >
+              <header className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--surface-2)] pb-3">
+                <h3 className="[font-family:var(--font-display)] text-3xl uppercase leading-none md:text-4xl">
+                  {group.leagueName}
+                  {group.country ? (
+                    <span className="ml-2 [font-family:var(--font-body)] text-xs text-[var(--muted)]">
+                      {group.country}
+                    </span>
+                  ) : null}
+                </h3>
+                <span className="rounded-full border border-[var(--surface-2)] px-3 py-1 [font-family:var(--font-mono)] text-xs text-[var(--lime)]">
+                  NEXT MATCHDAY - {formatMatchdayLabel(group.matchdayKey)}
+                </span>
+              </header>
+
+              <div className="mt-4 grid grid-cols-1 gap-3">
+                {group.fixtures.map((fixture, index) => (
+                  <FixtureCard
+                    key={fixture.providerFixtureId}
+                    fixture={fixture}
+                    entryIndex={index}
+                    mode="UPCOMING"
+                    showLeague={false}
+                  />
+                ))}
+              </div>
+            </section>
           ))}
           {visibleUpcoming.length === 0 && (
-            <div className={styles.empty}>No upcoming fixtures found.</div>
+            <div className="rounded-xl border border-dashed border-[var(--surface-2)] p-4 [font-family:var(--font-body)] text-sm text-[var(--muted)]">
+              No upcoming fixtures found.
+            </div>
           )}
         </div>
       </section>
 
       <section className="section-block">
         <h2 className="section-title">Results</h2>
-        <div className={styles.grid}>
-          {visibleResults.map((fixture, index) => (
-            <FixtureCard
-              key={fixture.providerFixtureId}
-              fixture={fixture}
-              entryIndex={visibleLive.length + visibleUpcoming.length + index}
-            />
+        <div className="grid grid-cols-1 gap-5">
+          {visibleResults.map((group) => (
+            <section
+              key={`${group.leagueId}-${group.matchdayKey}`}
+              className="rounded-3xl border border-[var(--surface-2)] bg-[radial-gradient(circle_at_top_left,rgba(240,240,240,0.1),transparent_36%),linear-gradient(160deg,rgba(255,255,255,0.04),transparent_35%),var(--surface)] p-4 md:p-5"
+            >
+              <header className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--surface-2)] pb-3">
+                <h3 className="[font-family:var(--font-display)] text-3xl uppercase leading-none md:text-4xl">
+                  {group.leagueName}
+                  {group.country ? (
+                    <span className="ml-2 [font-family:var(--font-body)] text-xs text-[var(--muted)]">
+                      {group.country}
+                    </span>
+                  ) : null}
+                </h3>
+                <span className="rounded-full border border-[var(--surface-2)] px-3 py-1 [font-family:var(--font-mono)] text-xs text-[var(--white)]">
+                  PAST MATCHDAY - {formatMatchdayLabel(group.matchdayKey)}
+                </span>
+              </header>
+
+              <div className="mt-4 grid grid-cols-1 gap-3">
+                {group.fixtures.map((fixture, index) => (
+                  <FixtureCard
+                    key={fixture.providerFixtureId}
+                    fixture={fixture}
+                    entryIndex={index}
+                    mode="RESULTS"
+                    showLeague={false}
+                  />
+                ))}
+              </div>
+            </section>
           ))}
           {visibleResults.length === 0 && (
-            <div className={styles.empty}>No recent results found.</div>
+            <div className="rounded-xl border border-dashed border-[var(--surface-2)] p-4 [font-family:var(--font-body)] text-sm text-[var(--muted)]">
+              No recent results found.
+            </div>
           )}
         </div>
       </section>
